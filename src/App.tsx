@@ -97,7 +97,7 @@ function MainWebsite() {
           onRequestQuoteWithMaterial={handleRequestQuoteWithMaterial}
         />
 
-        {/* 5. Approved Vendor Registrations (All 18 Entities with Vendor Codes) */}
+        {/* 5. Approved Vendor Registrations (All 32 Entities) */}
         <VendorsSection />
 
         {/* 6. Projects & Reference Portfolio */}

@@ -15,252 +15,12 @@ import {
   Eye,
 } from 'lucide-react';
 
-// ==================== 18 AUTHENTIC VECTOR LOGOS FOR VENDOR LIST ====================
-
-const VendorLogos: Record<string, React.FC<{ className?: string }>> = {
-  // 01. Saudi Aramco
-  'vendor-1': ({ className = 'w-10 h-10' }) => (
-    <svg viewBox="0 0 100 50" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="50" rx="8" fill="#F8FAFC" />
-      <g transform="translate(8, 7)">
-        <circle cx="18" cy="18" r="14" fill="#002D42" />
-        <circle cx="18" cy="18" r="9" fill="#00A3E0" />
-        <circle cx="18" cy="18" r="4" fill="#84BD00" />
-      </g>
-      <text x="44" y="22" fill="#002D42" fontFamily="sans-serif" fontWeight="900" fontSize="11">aramco</text>
-      <text x="44" y="36" fill="#00A3E0" fontFamily="sans-serif" fontWeight="700" fontSize="9">أرامكو السعودية</text>
-    </svg>
-  ),
-
-  // 02. Saudi Electricity Co.
-  'vendor-2': ({ className = 'w-10 h-10' }) => (
-    <svg viewBox="0 0 100 50" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="50" rx="8" fill="#F8FAFC" />
-      <g transform="translate(6, 6)">
-        <circle cx="18" cy="19" r="13" stroke="#00A3E0" strokeWidth="2.5" />
-        <path d="M12 19C14 13 22 13 24 19C26 25 34 25 36 19" stroke="#E11D48" strokeWidth="2.5" strokeLinecap="round" />
-      </g>
-      <text x="44" y="22" fill="#0F172A" fontFamily="sans-serif" fontWeight="900" fontSize="12">SEC</text>
-      <text x="44" y="36" fill="#0284C7" fontFamily="sans-serif" fontWeight="700" fontSize="7.5">الشركة السعودية للكهرباء</text>
-    </svg>
-  ),
-
-  // 03. NEOM
-  'vendor-3': ({ className = 'w-10 h-10' }) => (
-    <svg viewBox="0 0 100 50" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="50" rx="8" fill="#F8FAFC" />
-      <g transform="translate(6, 8)">
-        {/* Colorful NEOM polygon facets */}
-        <polygon points="12,6 24,2 28,14 18,18" fill="#E11D48" />
-        <polygon points="24,2 34,10 28,22 18,18" fill="#0284C7" />
-        <polygon points="12,6 18,18 10,26 4,16" fill="#10B981" />
-        <polygon points="18,18 28,22 22,32 10,26" fill="#F59E0B" />
-      </g>
-      <text x="44" y="24" fill="#1E293B" fontFamily="sans-serif" fontWeight="900" fontSize="13" letterSpacing="1">NEOM</text>
-      <text x="44" y="37" fill="#64748B" fontFamily="sans-serif" fontWeight="700" fontSize="9">نيوم</text>
-    </svg>
-  ),
-
-  // 04. Al Yamama Co.
-  'vendor-4': ({ className = 'w-10 h-10' }) => (
-    <svg viewBox="0 0 100 50" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="50" rx="8" fill="#F8FAFC" />
-      <g transform="translate(10, 6)">
-        <circle cx="16" cy="16" r="10" fill="#22C55E" opacity="0.85" />
-        <circle cx="21" cy="21" r="9" fill="#1E40AF" />
-      </g>
-      <text x="45" y="23" fill="#1E3A8A" fontFamily="sans-serif" fontWeight="900" fontSize="11">اليمامة</text>
-      <text x="45" y="36" fill="#22C55E" fontFamily="sans-serif" fontWeight="800" fontSize="8" letterSpacing="0.5">ALYAMAMA</text>
-    </svg>
-  ),
-
-  // 05. Shapoorji Pallonji
-  'vendor-5': ({ className = 'w-10 h-10' }) => (
-    <svg viewBox="0 0 100 50" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="50" rx="8" fill="#F8FAFC" />
-      <g transform="translate(6, 6)">
-        <path d="M10 26L20 8L30 26H22L20 20L18 26H10Z" fill="#1E3A8A" />
-        <path d="M16 28L20 35L24 28H16Z" fill="#0284C7" />
-      </g>
-      <text x="38" y="22" fill="#1E3A8A" fontFamily="sans-serif" fontWeight="900" fontSize="9">Shapoorji</text>
-      <text x="38" y="35" fill="#0284C7" fontFamily="sans-serif" fontWeight="800" fontSize="9">Pallonji</text>
-    </svg>
-  ),
-
-  // 06. Saudi Radwa Food Co.
-  'vendor-6': ({ className = 'w-10 h-10' }) => (
-    <svg viewBox="0 0 100 50" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="50" rx="8" fill="#F8FAFC" />
-      <g transform="translate(6, 7)">
-        <path d="M12 28C10 20 18 10 26 12C28 14 30 18 28 24C24 28 16 30 12 28Z" fill="#EF4444" />
-        <path d="M22 6C20 8 20 10 22 12C24 10 24 8 22 6Z" fill="#F59E0B" />
-        <circle cx="20" cy="14" r="2" fill="#FFFFFF" />
-      </g>
-      <text x="40" y="22" fill="#1E3A8A" fontFamily="sans-serif" fontWeight="900" fontSize="10">دجاج رضوى</text>
-      <text x="40" y="35" fill="#EF4444" fontFamily="sans-serif" fontWeight="700" fontSize="8">Radwa Chicken</text>
-    </svg>
-  ),
-
-  // 07. Alkifah Contracting
-  'vendor-7': ({ className = 'w-10 h-10' }) => (
-    <svg viewBox="0 0 100 50" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="50" rx="8" fill="#F8FAFC" />
-      <g transform="translate(6, 6)">
-        <path d="M8 26C12 14 26 14 30 26" stroke="#DC2626" strokeWidth="3" fill="none" />
-        <path d="M14 26L19 12L24 26" stroke="#DC2626" strokeWidth="2" fill="none" />
-        <rect x="15" y="15" width="8" height="4" fill="#DC2626" />
-      </g>
-      <text x="38" y="22" fill="#1E293B" fontFamily="sans-serif" fontWeight="900" fontSize="9">الكفاح للمقاولات</text>
-      <text x="38" y="35" fill="#DC2626" fontFamily="sans-serif" fontWeight="700" fontSize="7">ALKIFAH</text>
-    </svg>
-  ),
-
-  // 08. Al-Bawani
-  'vendor-8': ({ className = 'w-10 h-10' }) => (
-    <svg viewBox="0 0 100 50" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="50" rx="8" fill="#F8FAFC" />
-      <g transform="translate(6, 6)">
-        <polygon points="18,6 28,26 8,26" stroke="#047857" strokeWidth="2.5" fill="none" />
-        <line x1="8" y1="20" x2="28" y2="20" stroke="#047857" strokeWidth="2" />
-        <circle cx="18" cy="14" r="2.5" fill="#047857" />
-      </g>
-      <text x="38" y="22" fill="#065F46" fontFamily="sans-serif" fontWeight="900" fontSize="10">البواني</text>
-      <text x="38" y="35" fill="#047857" fontFamily="sans-serif" fontWeight="800" fontSize="8" letterSpacing="0.5">AL BAWANI</text>
-    </svg>
-  ),
-
-  // 09. EFSIM
-  'vendor-9': ({ className = 'w-10 h-10' }) => (
-    <svg viewBox="0 0 100 50" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="50" rx="8" fill="#F8FAFC" />
-      <text x="50" y="27" textAnchor="middle" fill="#0F172A" fontFamily="sans-serif" fontWeight="900" fontSize="18" letterSpacing="1.5">
-        EFSIM
-      </text>
-      <text x="50" y="40" textAnchor="middle" fill="#0284C7" fontFamily="sans-serif" fontWeight="700" fontSize="6.5" letterSpacing="0.5">
-        FACILITIES MANAGEMENT
-      </text>
-    </svg>
-  ),
-
-  // 10. Saudi Binladin Group
-  'vendor-10': ({ className = 'w-10 h-10' }) => (
-    <svg viewBox="0 0 100 50" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="50" rx="8" fill="#F8FAFC" />
-      <g transform="translate(6, 6)">
-        <path d="M18 4L29 10V22L18 28L7 22V10L18 4Z" stroke="#0F172A" strokeWidth="2" fill="none" />
-        <path d="M18 10L24 13V20L18 23L12 20V13L18 10Z" fill="#1E293B" />
-      </g>
-      <text x="38" y="22" fill="#0F172A" fontFamily="sans-serif" fontWeight="900" fontSize="9">مجموعة بن لادن</text>
-      <text x="38" y="35" fill="#64748B" fontFamily="sans-serif" fontWeight="700" fontSize="6.5">BINLADIN GROUP</text>
-    </svg>
-  ),
-
-  // 11. Nesma & Partners
-  'vendor-11': ({ className = 'w-10 h-10' }) => (
-    <svg viewBox="0 0 100 50" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="50" rx="8" fill="#F8FAFC" />
-      <g transform="translate(6, 8)">
-        <polygon points="18,4 28,10 28,22 18,28 8,22 8,10" fill="#F97316" />
-        <polygon points="18,9 23,12 23,20 18,23 13,20 13,12" fill="#F8FAFC" />
-      </g>
-      <text x="38" y="22" fill="#0F172A" fontFamily="sans-serif" fontWeight="900" fontSize="11">نسما</text>
-      <text x="38" y="35" fill="#F97316" fontFamily="sans-serif" fontWeight="800" fontSize="8">nesma</text>
-    </svg>
-  ),
-
-  // 12. SABIC
-  'vendor-12': ({ className = 'w-10 h-10' }) => (
-    <svg viewBox="0 0 100 50" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="50" rx="8" fill="#F8FAFC" />
-      <text x="50" y="24" textAnchor="middle" fill="#0284C7" fontFamily="sans-serif" fontWeight="900" fontSize="14">
-        سابك
-      </text>
-      <text x="50" y="38" textAnchor="middle" fill="#EA580C" fontFamily="sans-serif" fontWeight="900" fontSize="12" letterSpacing="0.5">
-        sabic
-      </text>
-    </svg>
-  ),
-
-  // 13. Jeddah Central Development Co
-  'vendor-13': ({ className = 'w-10 h-10' }) => (
-    <svg viewBox="0 0 100 50" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="50" rx="8" fill="#F8FAFC" />
-      <g transform="translate(6, 6)">
-        <path d="M8 8H14L18 28H12L8 8Z" fill="#F59E0B" />
-        <path d="M14 8H20L24 28H18L14 8Z" fill="#0284C7" />
-        <path d="M20 8H26L30 28H24L20 8Z" fill="#0D9488" />
-      </g>
-      <text x="38" y="20" fill="#0F172A" fontFamily="sans-serif" fontWeight="900" fontSize="8.5">وسط جدة للتطوير</text>
-      <text x="38" y="34" fill="#0284C7" fontFamily="sans-serif" fontWeight="700" fontSize="7">Jeddah Central</text>
-    </svg>
-  ),
-
-  // 14. Spray Polyurethane Foam Alliance (SPFA)
-  'vendor-14': ({ className = 'w-10 h-10' }) => (
-    <svg viewBox="0 0 100 50" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="50" rx="8" fill="#F8FAFC" />
-      <text x="50" y="26" textAnchor="middle" fill="#1E3A8A" fontFamily="sans-serif" fontWeight="900" fontStyle="italic" fontSize="17" letterSpacing="1">
-        SPFA
-      </text>
-      <text x="50" y="39" textAnchor="middle" fill="#EA580C" fontFamily="sans-serif" fontWeight="700" fontSize="6">
-        SPRAY FOAM ALLIANCE
-      </text>
-    </svg>
-  ),
-
-  // 15. Tatweer Buildings Company (TBC)
-  'vendor-15': ({ className = 'w-10 h-10' }) => (
-    <svg viewBox="0 0 100 50" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="50" rx="8" fill="#F8FAFC" />
-      <text x="50" y="25" textAnchor="middle" fill="#0284C7" fontFamily="sans-serif" fontWeight="900" fontSize="18" letterSpacing="1">
-        TBC
-      </text>
-      <text x="50" y="38" textAnchor="middle" fill="#0891B2" fontFamily="sans-serif" fontWeight="700" fontSize="7">
-        تطوير المباني
-      </text>
-    </svg>
-  ),
-
-  // 16. El Seif Engineering Contracting Company
-  'vendor-16': ({ className = 'w-10 h-10' }) => (
-    <svg viewBox="0 0 100 50" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="50" rx="8" fill="#F8FAFC" />
-      <g transform="translate(6, 6)">
-        <polygon points="18,4 28,28 8,28" stroke="#DC2626" strokeWidth="2.5" fill="none" />
-        <line x1="12" y1="20" x2="24" y2="20" stroke="#DC2626" strokeWidth="2" />
-        <line x1="15" y1="12" x2="21" y2="12" stroke="#DC2626" strokeWidth="1.5" />
-      </g>
-      <text x="38" y="22" fill="#DC2626" fontFamily="sans-serif" fontWeight="900" fontSize="10">EL SEIF</text>
-      <text x="38" y="35" fill="#1E293B" fontFamily="sans-serif" fontWeight="700" fontSize="8">السيف مهندسون</text>
-    </svg>
-  ),
-
-  // 17. ROSHN Group Company
-  'vendor-17': ({ className = 'w-10 h-10' }) => (
-    <svg viewBox="0 0 100 50" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="50" rx="8" fill="#F8FAFC" />
-      <g transform="translate(6, 6)">
-        <circle cx="18" cy="18" r="12" stroke="#047857" strokeWidth="2" fill="none" />
-        <path d="M18 8V28M8 18H28M11 11L25 25M25 11L11 25" stroke="#047857" strokeWidth="1.5" />
-      </g>
-      <text x="38" y="22" fill="#047857" fontFamily="sans-serif" fontWeight="900" fontSize="10">ROSHN</text>
-      <text x="38" y="35" fill="#065F46" fontFamily="sans-serif" fontWeight="700" fontSize="8">مجموعة روشن</text>
-    </svg>
-  ),
-
-  // 18. UrbaCon Trading and Contracting (UCC)
-  'vendor-18': ({ className = 'w-10 h-10' }) => (
-    <svg viewBox="0 0 100 50" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="50" rx="8" fill="#F8FAFC" />
-      <text x="50" y="25" textAnchor="middle" fill="#854D0E" fontFamily="sans-serif" fontWeight="900" fontSize="17" letterSpacing="1">
-        UCC
-      </text>
-      <text x="50" y="38" textAnchor="middle" fill="#A16207" fontFamily="sans-serif" fontWeight="700" fontSize="7">
-        أورباكون UrbaCon
-      </text>
-    </svg>
-  ),
-};
+// Official vendor logos live in /public/assets/vendors/vendor-<n>.jpg (taken from the KRCC vendor sheet)
+const POSTER_PAGES = [
+  '/assets/vendors/poster-1.jpg',
+  '/assets/vendors/poster-2.jpg',
+  '/assets/vendors/poster-3.jpg',
+];
 
 export const VendorsSection: React.FC = () => {
   const { t, language } = useLanguage();
@@ -268,6 +28,7 @@ export const VendorsSection: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [copiedCodeId, setCopiedCodeId] = useState<string | null>(null);
   const [showPosterModal, setShowPosterModal] = useState(false);
+  const [failedLogos, setFailedLogos] = useState<string[]>([]);
 
   const categories = [
     { id: 'all', label: t.vendors.filterAll },
@@ -290,7 +51,7 @@ export const VendorsSection: React.FC = () => {
       !term ||
       v.nameEn.toLowerCase().includes(term) ||
       v.nameAr.toLowerCase().includes(term) ||
-      v.vendorCode.toLowerCase().includes(term) ||
+      (v.vendorCode && v.vendorCode.toLowerCase().includes(term)) ||
       (v.secondaryCode && v.secondaryCode.toLowerCase().includes(term));
     return matchesCategory && matchesSearch;
   });
@@ -357,10 +118,10 @@ export const VendorsSection: React.FC = () => {
           </div>
         </div>
 
-        {/* 18 Vendors Cards Grid */}
+        {/* Vendors Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
           {filteredVendors.map((vendor) => {
-            const LogoComponent = VendorLogos[vendor.id];
+            const logoFailed = failedLogos.includes(vendor.id);
             const isCopied = copiedCodeId === vendor.id;
             const displayNumber = vendor.number.toString().padStart(2, '0');
 
@@ -391,9 +152,15 @@ export const VendorsSection: React.FC = () => {
 
                   {/* Company Logo and Entity Name */}
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="shrink-0 w-24 h-12 bg-slate-50 rounded-lg border border-slate-200 p-1 flex items-center justify-center overflow-hidden">
-                      {LogoComponent ? (
-                        <LogoComponent className="w-full h-full" />
+                    <div className="shrink-0 w-28 h-16 bg-white rounded-lg border border-slate-200 p-1.5 flex items-center justify-center overflow-hidden">
+                      {!logoFailed ? (
+                        <img
+                          src={`/assets/vendors/${vendor.id}.jpg`}
+                          alt={vendor.nameEn}
+                          loading="lazy"
+                          onError={() => setFailedLogos((prev) => [...prev, vendor.id])}
+                          className="max-w-full max-h-full object-contain"
+                        />
                       ) : (
                         <Building className="w-6 h-6 text-slate-400" />
                       )}
@@ -410,7 +177,8 @@ export const VendorsSection: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Vendor Code Highlight Box with Copy Button */}
+                {/* Vendor Code Highlight Box with Copy Button (only when the vendor sheet lists a code) */}
+                {vendor.vendorCode ? (
                 <div className="pt-3 border-t border-slate-100">
                   <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200/80 group-hover:bg-red-50/50 group-hover:border-red-200 transition-colors">
                     <div>
@@ -430,7 +198,7 @@ export const VendorsSection: React.FC = () => {
                     </div>
 
                     <button
-                      onClick={() => handleCopyCode(vendor.id, vendor.vendorCode)}
+                      onClick={() => handleCopyCode(vendor.id, vendor.vendorCode ?? '')}
                       className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                         isCopied
                           ? 'bg-emerald-600 text-white'
@@ -452,6 +220,16 @@ export const VendorsSection: React.FC = () => {
                     </button>
                   </div>
                 </div>
+                ) : (
+                  <div className="pt-3 border-t border-slate-100">
+                    <div className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
+                      <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                      <span className="text-[11px] font-bold tracking-wide text-slate-600">
+                        {language === 'ar' ? 'مورد معتمد لدى الجهة' : 'Approved Vendor'}
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
             );
           })}
@@ -518,13 +296,16 @@ export const VendorsSection: React.FC = () => {
               </button>
             </div>
 
-            {/* Poster Image */}
-            <div className="p-3 max-h-[80vh] overflow-y-auto flex items-center justify-center bg-slate-100">
-              <img
-                src="/assets/aistudio/WhatsApp_Image_2026-10-25_at_3.17.15_PM_3530d2cc.jpeg"
-                alt="KRCC Official Vendor List Poster"
-                className="max-w-full h-auto rounded-lg shadow-md border border-slate-200"
-              />
+            {/* Poster Pages (current KRCC vendor sheet) */}
+            <div className="p-3 max-h-[80vh] overflow-y-auto flex flex-col items-center gap-3 bg-slate-100">
+              {POSTER_PAGES.map((src, i) => (
+                <img
+                  key={src}
+                  src={src}
+                  alt={`KRCC Official Vendor List - page ${i + 1}`}
+                  className="max-w-full h-auto rounded-lg shadow-md border border-slate-200"
+                />
+              ))}
             </div>
 
             {/* Modal Footer */}

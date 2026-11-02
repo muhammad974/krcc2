@@ -131,7 +131,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenProfileModal, onOpenDownlo
                   onClick={() => scrollTo('vendors')}
                   className="text-red-700 hover:text-red-800 font-bold transition-colors text-start cursor-pointer text-xs"
                 >
-                  {language === 'ar' ? '★ قائمة الموردين المعتمدين (١٨)' : '★ Approved Vendor List (18)'}
+                  {language === 'ar' ? '★ قائمة الموردين المعتمدين (٣٢)' : '★ Approved Vendor List (32)'}
                 </button>
               </li>
             </ul>

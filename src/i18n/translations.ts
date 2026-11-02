@@ -96,7 +96,7 @@ export const translations = {
       title: 'Our Approved Vendor Registrations',
       subtitle:
         'Khabeer Al Raida Contracting Company (KRCC) is an officially registered and pre-qualified vendor with Saudi Arabia’s leading energy titans, giga-projects, government authorities, and Tier-1 construction conglomerates.',
-      filterAll: 'All Vendors (18)',
+      filterAll: 'All Vendors (32)',
       filterGiga: 'Giga-Projects',
       filterEnergy: 'Energy & Utilities',
       filterContractors: 'Tier-1 Contractors',
@@ -108,7 +108,7 @@ export const translations = {
       verifiedStatus: 'Approved & Active',
       viewOriginalPoster: 'View Official Poster',
       closePoster: 'Close Document',
-      statTotal: '18',
+      statTotal: '32',
       statTotalLabel: 'Official Vendor Pre-Qualifications',
     },
     services: {
@@ -299,10 +299,10 @@ export const translations = {
     },
     vendors: {
       kicker: 'قيد الموردين والتأهيل المسبق المعتمد',
-      title: 'قائمة الموردين والجهات المعتمدة (18 جهة رسمية)',
+      title: 'قائمة الموردين والجهات المعتمدة (32 جهة رسمية)',
       subtitle:
         'شركة خبير الرائدة للمقاولات (KRCC) مسجلة ومؤهلة رسمياً كمورد معتمد لدى كبرى شركات الطاقة، والمشاريع الكبرى، والجهات الحكومية، ومجموعات المقاولات الرائدة في المملكة العربية السعودية.',
-      filterAll: 'جميع الجهات المعتمدة (١٨)',
+      filterAll: 'جميع الجهات المعتمدة (٣٢)',
       filterGiga: 'المشاريع الكبرى ورؤية ٢٠٣٠',
       filterEnergy: 'الطاقة والمرافق',
       filterContractors: 'مقاولون فئة أولى',
@@ -314,7 +314,7 @@ export const translations = {
       verifiedStatus: 'معتمد ومؤهل رسمياً',
       viewOriginalPoster: 'عرض ملصق الاعتماد الرسمي',
       closePoster: 'إغلاق المستند',
-      statTotal: '١٨',
+      statTotal: '٣٢',
       statTotalLabel: 'جهة رسمية معتمدة برمز مورد',
     },
     services: {

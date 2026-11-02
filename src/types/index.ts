@@ -80,7 +80,7 @@ export interface VendorItem {
   number: number;
   nameEn: string;
   nameAr: string;
-  vendorCode: string;
+  vendorCode?: string;
   codeLabelEn?: string;
   codeLabelAr?: string;
   secondaryCode?: string;
