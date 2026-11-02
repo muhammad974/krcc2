@@ -25,7 +25,7 @@ function MainWebsite() {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 400);
 
-      const sections = ['hero', 'about', 'services', 'materials', 'vendors', 'projects', 'contact'];
+      const sections = ['hero', 'certifications', 'about', 'services', 'materials', 'vendors', 'projects', 'contact'];
       for (const sectionId of sections) {
         const el = document.getElementById(sectionId);
         if (el) {

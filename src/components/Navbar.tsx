@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { KRCCLogo } from './KRCCLogo';
 import { Download, Globe, Menu, X, Phone } from 'lucide-react';
@@ -15,19 +15,11 @@ export const Navbar: React.FC<NavbarProps> = ({
   activeSection,
 }) => {
   const { t, language, toggleLanguage } = useLanguage();
-  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const navLinks = [
     { id: 'hero', label: t.nav.home },
+    { id: 'certifications', label: t.nav.certificates },
     { id: 'about', label: t.nav.about },
     { id: 'services', label: t.nav.services },
     { id: 'materials', label: t.nav.materials },
@@ -100,13 +92,9 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </div>
 
-      {/* Main Sticky Header */}
+      {/* Main Header (scrolls with the page - not sticky) */}
       <header
-        className={`sticky top-0 z-40 w-full transition-all duration-200 ${
-          isScrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200 py-2.5'
-            : 'bg-white shadow-xs border-b border-slate-200/80 py-3.5'
-        }`}
+        className="relative z-40 w-full bg-white shadow-xs border-b border-slate-200/80 py-3.5"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Company Logo Link */}
