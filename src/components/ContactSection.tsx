@@ -22,6 +22,12 @@ interface ContactSectionProps {
   initialMaterial?: string;
 }
 
+const EMAILJS = {
+  serviceId: 'service_mt5tzn3',
+  templateId: 'template_49qnsdi',
+  publicKey: 'xCRix7pSFjz6gjgnw',
+};
+
 export const ContactSection: React.FC<ContactSectionProps> = ({
   initialService = '',
   initialMaterial = '',
@@ -65,7 +71,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     setErrorMessage('');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formData.fullName.trim() || !formData.phone.trim() || !formData.email.trim() || !formData.projectDetails.trim()) {
@@ -74,11 +80,43 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     }
 
     setIsSubmitting(true);
-    // Simulate real enterprise dispatch
-    setTimeout(() => {
-      setIsSubmitting(false);
+    setErrorMessage('');
+    try {
+      const f = formData;
+      const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id: EMAILJS.serviceId,
+          template_id: EMAILJS.templateId,
+          user_id: EMAILJS.publicKey,
+          template_params: {
+            subject: `New quote request from ${f.fullName}`,
+            from_name: f.fullName, name: f.fullName, user_name: f.fullName, full_name: f.fullName,
+            from_email: f.email, email: f.email, user_email: f.email, reply_to: f.email,
+            phone: f.phone, user_phone: f.phone,
+            company: f.companyName || 'N/A', company_name: f.companyName || 'N/A',
+            service: f.serviceCategory || 'N/A', service_category: f.serviceCategory || 'N/A',
+            material: f.materialCategory || 'N/A', material_category: f.materialCategory || 'N/A',
+            location: f.projectLocation || 'N/A', project_location: f.projectLocation || 'N/A',
+            area: f.projectArea || 'N/A', project_area: f.projectArea || 'N/A',
+            message: f.projectDetails, project_details: f.projectDetails, details: f.projectDetails,
+            time: new Date().toLocaleString('en-GB', { timeZone: 'Asia/Riyadh' }),
+          },
+        }),
+      });
+      if (!res.ok) throw new Error(await res.text());
       setSubmitted(true);
-    }, 800);
+    } catch (err) {
+      console.error('Quote form send failed:', err);
+      setErrorMessage(
+        language === 'ar'
+          ? 'تعذر إرسال الطلب. يرجى المحاولة مرة أخرى أو التواصل معنا عبر واتساب.'
+          : 'Could not send your request. Please try again or contact us on WhatsApp.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const resetForm = () => {

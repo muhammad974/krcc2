@@ -131,7 +131,7 @@ export const CompanyProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) =
               </div>
               <div className="flex items-center gap-2">
                 <Globe className="w-3.5 h-3.5 text-red-700" />
-                <span>www.krccksa.com</span>
+                <span>www.krcc-ksa.com</span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5 text-red-700" />
