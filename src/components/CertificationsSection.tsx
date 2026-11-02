@@ -157,7 +157,7 @@ export const CertificationsSection: React.FC = () => {
       id: 'aramco',
       title: t.certifications.aramcoTitle,
       desc: t.certifications.aramcoDesc,
-      tag: 'Saudi Aramco Standards',
+      tag: 'Approved Vendor & Contractor',
       org: 'Saudi Arabian Oil Company',
       logo: RealAramco,
       accentColor: 'border-cyan-600',

@@ -63,7 +63,7 @@ export const KRCCLogo: React.FC<LogoProps> = ({
           </div>
 
           <span
-            className={`text-xs md:text-sm font-bold tracking-tight mt-0.5 ${
+            className={`${language === 'ar' ? 'text-base md:text-xl' : 'text-xs md:text-sm tracking-tight'} font-bold mt-0.5 ${
               isDark ? 'text-neutral-200' : 'text-slate-800'
             }`}
           >
@@ -78,9 +78,11 @@ export const KRCCLogo: React.FC<LogoProps> = ({
             </span>
           ) : (
             <span
-              className={`text-[9px] tracking-wider uppercase ${
-                isDark ? 'text-neutral-400' : 'text-slate-500'
-              }`}
+              className={`${
+                language === 'ar'
+                  ? 'text-[9px] tracking-wider uppercase'
+                  : 'text-sm md:text-lg font-bold leading-snug'
+              } ${isDark ? 'text-neutral-300' : 'text-slate-600'}`}
             >
               {language === 'ar'
                 ? 'KHABEER AL RAIDA CONTRACTING'
