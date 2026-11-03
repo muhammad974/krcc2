@@ -1,510 +1,724 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { ShieldCheck, CheckCircle2, Award, ExternalLink, X, Download, FileText } from 'lucide-react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Download,
+  FileText,
+  X,
+  ZoomIn,
+  ZoomOut,
+} from 'lucide-react';
+import './certificates.css';
 
-// ==================== AUTHENTIC VECTOR LOGOS ====================
+type Lang = 'en' | 'ar';
+type GroupId = 'standards' | 'approvals' | 'letters';
+type FilterId = 'all' | GroupId;
 
-// 1. ISO Logo (International Organization for Standardization)
-const IsoLogo: React.FC<{ className?: string }> = ({ className = 'w-12 h-12' }) => (
-  <svg viewBox="0 0 80 80" className={className} fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="ISO Certification Logo">
-    <rect width="80" height="80" rx="14" fill="#005A9C" />
-    {/* Global Latitude / Longitude grid lines */}
-    <circle cx="40" cy="40" r="30" stroke="#FFFFFF" strokeWidth="2" strokeDasharray="3 3" opacity="0.35" />
-    <ellipse cx="40" cy="40" rx="30" ry="12" stroke="#FFFFFF" strokeWidth="1.5" opacity="0.4" />
-    <path d="M40 10V70" stroke="#FFFFFF" strokeWidth="1.5" opacity="0.4" />
-    {/* ISO Bold Lettermark */}
-    <text x="40" y="47" textAnchor="middle" fill="#FFFFFF" fontFamily="sans-serif" fontWeight="900" fontSize="22" letterSpacing="1">
-      ISO
-    </text>
-    <text x="40" y="60" textAnchor="middle" fill="#93C5FD" fontFamily="sans-serif" fontWeight="700" fontSize="8" letterSpacing="0.5">
-      9001:2015
-    </text>
-  </svg>
-);
-
-// 2. Saudi Aramco Logo (أرامكو السعودية)
-const AramcoLogo: React.FC<{ className?: string }> = ({ className = 'w-12 h-12' }) => (
-  <svg viewBox="0 0 80 80" className={className} fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Saudi Aramco Logo">
-    <rect width="80" height="80" rx="14" fill="#002D42" />
-    {/* Aramco stylized dynamic energy starburst */}
-    <g transform="translate(10, 8)">
-      <circle cx="30" cy="24" r="16" fill="url(#aramcoGlow)" />
-      {/* Dynamic converging rays */}
-      <path d="M30 10C37.7 10 44 16.3 44 24C44 31.7 37.7 38 30 38C22.3 38 16 31.7 16 24C16 16.3 22.3 10 30 10Z" fill="#00A3E0" />
-      <path d="M30 14C35.5 14 40 18.5 40 24C40 29.5 35.5 34 30 34C24.5 34 20 29.5 20 24C20 18.5 24.5 14 30 14Z" fill="#84BD00" />
-      <circle cx="30" cy="24" r="6" fill="#002D42" />
-      <circle cx="30" cy="24" r="3" fill="#FFFFFF" />
-    </g>
-    <text x="40" y="58" textAnchor="middle" fill="#FFFFFF" fontFamily="sans-serif" fontWeight="800" fontSize="13" letterSpacing="0.5">
-      aramco
-    </text>
-    <text x="40" y="69" textAnchor="middle" fill="#84BD00" fontFamily="sans-serif" fontWeight="700" fontSize="8">
-      أرامكو السعودية
-    </text>
-    <defs>
-      <radialGradient id="aramcoGlow" cx="0.5" cy="0.5" r="0.5">
-        <stop stopColor="#00A3E0" stopOpacity="0.4" />
-        <stop offset="1" stopColor="#00A3E0" stopOpacity="0" />
-      </radialGradient>
-    </defs>
-  </svg>
-);
-
-// 3. SEC (Saudi Electricity Company / الشركة السعودية للكهرباء)
-const SecLogo: React.FC<{ className?: string }> = ({ className = 'w-12 h-12' }) => (
-  <svg viewBox="0 0 80 80" className={className} fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Saudi Electricity Company Logo">
-    <rect width="80" height="80" rx="14" fill="#0F172A" />
-    {/* Electric Energy dynamic wave / arc */}
-    <g transform="translate(15, 10)">
-      <path
-        d="M25 6L14 26H26L21 44L38 22H25L31 6H25Z"
-        fill="url(#secElectric)"
-      />
-      <circle cx="25" cy="25" r="22" stroke="#00A3E0" strokeWidth="1.5" opacity="0.3" strokeDasharray="4 2" />
-    </g>
-    <text x="40" y="60" textAnchor="middle" fill="#FFFFFF" fontFamily="sans-serif" fontWeight="900" fontSize="14" letterSpacing="1">
-      SEC
-    </text>
-    <text x="40" y="70" textAnchor="middle" fill="#38BDF8" fontFamily="sans-serif" fontWeight="600" fontSize="7">
-      الكهرباء السعودية
-    </text>
-    <defs>
-      <linearGradient id="secElectric" x1="14" y1="6" x2="38" y2="44">
-        <stop stopColor="#F59E0B" />
-        <stop offset="0.5" stopColor="#E11D48" />
-        <stop offset="1" stopColor="#0284C7" />
-      </linearGradient>
-    </defs>
-  </svg>
-);
-
-// 4. Saudi Contractor Classification (تصنيف المقاولين - وزارة البلديات والإسكان)
-const ClassificationLogo: React.FC<{ className?: string }> = ({ className = 'w-12 h-12' }) => (
-  <svg viewBox="0 0 80 80" className={className} fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Saudi Contractor Classification Logo">
-    <rect width="80" height="80" rx="14" fill="#1C1917" />
-    {/* Golden Saudi emblem palm and swords + building tier */}
-    <g transform="translate(20, 8)">
-      <path d="M20 6C20 6 15 11 12 16C15 17 25 17 28 16C25 11 20 6 20 6Z" fill="#EAB308" />
-      <path d="M20 16V28" stroke="#EAB308" strokeWidth="2.5" strokeLinecap="round" />
-      {/* Crossed Swords */}
-      <path d="M10 24L30 32M30 24L10 32" stroke="#FACC15" strokeWidth="2" strokeLinecap="round" />
-      {/* Structural building tiers representing classification */}
-      <rect x="5" y="34" width="30" height="3" rx="1.5" fill="#EAB308" />
-      <rect x="9" y="30" width="22" height="2" rx="1" fill="#CA8A04" />
-      <rect x="13" y="27" width="14" height="2" rx="1" fill="#A16207" />
-    </g>
-    <text x="40" y="56" textAnchor="middle" fill="#FDE047" fontFamily="sans-serif" fontWeight="900" fontSize="10" letterSpacing="0.5">
-      CLASSIFIED
-    </text>
-    <text x="40" y="68" textAnchor="middle" fill="#FFFFFF" fontFamily="sans-serif" fontWeight="800" fontSize="8.5">
-      تصنيف المقاولين
-    </text>
-  </svg>
-);
-
-// 5. SAC Logo (Saudi Accreditation Center / Saudi Contractors Authority SCA)
-const SacLogo: React.FC<{ className?: string }> = ({ className = 'w-12 h-12' }) => (
-  <svg viewBox="0 0 80 80" className={className} fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Saudi Accreditation Center Logo">
-    <rect width="80" height="80" rx="14" fill="#064E3B" />
-    {/* Geometric green Accreditation Shield & Verification checkmark */}
-    <g transform="translate(20, 8)">
-      <path
-        d="M20 5L36 12V24C36 33 29 41 20 44C11 41 4 33 4 24V12L20 5Z"
-        fill="#047857"
-        stroke="#10B981"
-        strokeWidth="1.5"
-      />
-      {/* Checkmark of accreditation */}
-      <path
-        d="M13 24L18 29L28 18"
-        stroke="#FFFFFF"
-        strokeWidth="3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </g>
-    <text x="40" y="60" textAnchor="middle" fill="#FFFFFF" fontFamily="sans-serif" fontWeight="900" fontSize="13" letterSpacing="1">
-      SAC
-    </text>
-    <text x="40" y="70" textAnchor="middle" fill="#A7F3D0" fontFamily="sans-serif" fontWeight="700" fontSize="7">
-      المركز السعودي للاعتماد
-    </text>
-  </svg>
-);
-
-const imgLogo = (file: string, alt: string): React.FC<{ className?: string }> => ({ className }) => (
-  <img src={`/assets/certs/${file}`} alt={alt} loading="lazy" className={className} />
-);
-const RealAramco = imgLogo('aramco.png', 'Saudi Aramco logo');
-const RealSec = imgLogo('sec.png', 'Saudi Electricity Company logo');
-const RealSca = imgLogo('sca.png', 'Saudi Contractors Authority logo');
-const RealGrade = imgLogo('grade3.png', 'Classification');
-
-
-// ---------- Certificate documents (files live in /public/assets/certificates) ----------
-interface CertDoc {
-  id: string;
+interface L10n {
   en: string;
   ar: string;
-  subEn?: string;
-  subAr?: string;
+}
+interface Fact {
+  label: L10n;
+  value: L10n;
+}
+interface CertItem {
+  id: string;
+  group: GroupId;
+  title: L10n;
+  kind: L10n;
+  issuer: L10n;
+  /** ISO dates (YYYY-MM-DD) exactly as printed on the document */
+  issued: string;
+  expires?: string;
   thumb: string;
   pages: string[];
-  pdf: string;
-  landscape?: boolean;
+  /** file offered by the Download button (PDF, or the image when no PDF exists) */
+  file: string;
+  wide?: boolean;
+  /** width / height of a wide (landscape) page, so it is not cropped */
+  ratio?: number;
+  facts: Fact[];
 }
 
-const CERT_BASE = '/assets/certificates';
+const bi = (en: string, ar?: string): L10n => ({ en, ar: ar ?? en });
+const BASE = '/assets/certificates';
 
-const CERT_DOCS: Record<string, CertDoc[]> = {
-  iso: [
-    {
-      id: 'iso-9001',
-      en: 'ISO 9001:2015',
-      ar: 'آيزو 9001:2015',
-      subEn: 'Quality Management',
-      subAr: 'إدارة الجودة',
-      thumb: `${CERT_BASE}/iso-9001.jpg`,
-      pages: [`${CERT_BASE}/iso-9001.jpg`],
-      pdf: `${CERT_BASE}/iso-9001.pdf`,
-    },
-    {
-      id: 'iso-14001',
-      en: 'ISO 14001:2015',
-      ar: 'آيزو 14001:2015',
-      subEn: 'Environmental Management',
-      subAr: 'الإدارة البيئية',
-      thumb: `${CERT_BASE}/iso-14001.jpg`,
-      pages: [`${CERT_BASE}/iso-14001.jpg`],
-      pdf: `${CERT_BASE}/iso-14001.pdf`,
-    },
-    {
-      id: 'iso-45001',
-      en: 'ISO 45001:2018',
-      ar: 'آيزو 45001:2018',
-      subEn: 'Health & Safety',
-      subAr: 'الصحة والسلامة المهنية',
-      thumb: `${CERT_BASE}/iso-45001.jpg`,
-      pages: [`${CERT_BASE}/iso-45001.jpg`],
-      pdf: `${CERT_BASE}/iso-45001.pdf`,
-    },
-  ],
-  aramco: [
-    {
-      id: 'aramco-approval',
-      en: 'Registration Approval Letter',
-      ar: 'خطاب اعتماد التسجيل',
-      subEn: 'Saudi Aramco',
-      subAr: 'أرامكو السعودية',
-      thumb: `${CERT_BASE}/aramco-approval.jpg`,
-      pages: [`${CERT_BASE}/aramco-approval.jpg`],
-      pdf: `${CERT_BASE}/aramco-approval.pdf`,
-    },
-  ],
-  classification: [
-    {
-      id: 'classification',
-      en: 'Classification Certificate',
-      ar: 'شهادة التصنيف',
-      subEn: 'Municipal Services Provider Classification',
-      subAr: 'تصنيف مقدمي خدمات المدن',
-      thumb: `${CERT_BASE}/classification-1.jpg`,
-      pages: [1, 2, 3, 4, 5, 6].map((n) => `${CERT_BASE}/classification-${n}.jpg`),
-      pdf: `${CERT_BASE}/classification.pdf`,
-      landscape: true,
-    },
-  ],
-  sca: [
-    {
-      id: 'sca-membership',
-      en: 'Membership Certificate',
-      ar: 'شهادة عضوية مقاول',
-      subEn: 'Saudi Contractors Authority',
-      subAr: 'الهيئة السعودية للمقاولين',
-      thumb: `${CERT_BASE}/sca.jpg`,
-      pages: [`${CERT_BASE}/sca.jpg`],
-      pdf: `${CERT_BASE}/sca.pdf`,
-    },
-  ],
+const ISO_SCOPE = bi(
+  'General contractor: construction and maintenance in civil, mechanical, electrical and instrumentation works, waterproofing, fire fighting and plumbing',
+  'مقاول عام: أعمال الإنشاء والصيانة المدنية والميكانيكية والكهربائية وأنظمة القياس والتحكم، والعزل المائي، ومكافحة الحريق، والسباكة'
+);
+const ISO_ISSUER = bi('UMS Certifications, accredited by UAF', 'UMS Certifications، معتمدة من UAF');
+
+/* ------------------------------------------------------------------ data
+   To update a certificate later: replace its files in /public/assets/certificates
+   and change the dates below - the "Valid until / Expired" label follows the date. */
+const ITEMS: CertItem[] = [
+  /* management system standards */
+  {
+    id: 'iso-9001',
+    group: 'standards',
+    title: bi('ISO 9001:2015', 'آيزو 9001:2015'),
+    kind: bi('Quality management system', 'نظام إدارة الجودة'),
+    issuer: ISO_ISSUER,
+    issued: '2025-09-11',
+    expires: '2028-09-10',
+    thumb: `${BASE}/iso-9001-thumb.jpg`,
+    pages: [`${BASE}/iso-9001.jpg`],
+    file: `${BASE}/iso-9001.pdf`,
+    facts: [
+      { label: bi('Certificate no.', 'رقم الشهادة'), value: bi('UAF110991559') },
+      { label: bi('Client ID', 'رقم العميل'), value: bi('KH389') },
+      { label: bi('Scope', 'النطاق'), value: ISO_SCOPE },
+    ],
+  },
+  {
+    id: 'iso-14001',
+    group: 'standards',
+    title: bi('ISO 14001:2015', 'آيزو 14001:2015'),
+    kind: bi('Environmental management system', 'نظام الإدارة البيئية'),
+    issuer: ISO_ISSUER,
+    issued: '2025-09-11',
+    expires: '2028-09-10',
+    thumb: `${BASE}/iso-14001-thumb.jpg`,
+    pages: [`${BASE}/iso-14001.jpg`],
+    file: `${BASE}/iso-14001.pdf`,
+    facts: [
+      { label: bi('Certificate no.', 'رقم الشهادة'), value: bi('UAF1109141560') },
+      { label: bi('Client ID', 'رقم العميل'), value: bi('KH389') },
+      { label: bi('Scope', 'النطاق'), value: ISO_SCOPE },
+    ],
+  },
+  {
+    id: 'iso-45001',
+    group: 'standards',
+    title: bi('ISO 45001:2018', 'آيزو 45001:2018'),
+    kind: bi('Occupational health and safety', 'الصحة والسلامة المهنية'),
+    issuer: ISO_ISSUER,
+    issued: '2025-09-11',
+    expires: '2028-09-10',
+    thumb: `${BASE}/iso-45001-thumb.jpg`,
+    pages: [`${BASE}/iso-45001.jpg`],
+    file: `${BASE}/iso-45001.pdf`,
+    facts: [
+      { label: bi('Certificate no.', 'رقم الشهادة'), value: bi('UAF1109451561') },
+      { label: bi('Client ID', 'رقم العميل'), value: bi('KH389') },
+      { label: bi('Scope', 'النطاق'), value: ISO_SCOPE },
+    ],
+  },
+
+  /* approvals and registrations */
+  {
+    id: 'aramco-approval',
+    group: 'approvals',
+    title: bi('Saudi Aramco registration', 'تسجيل أرامكو السعودية'),
+    kind: bi('Registration approval letter', 'خطاب اعتماد التسجيل'),
+    issuer: bi('Saudi Aramco, Supplier Registration Unit', 'أرامكو السعودية، وحدة تسجيل الموردين'),
+    issued: '2023-04-17',
+    thumb: `${BASE}/aramco-approval-thumb.jpg`,
+    pages: [`${BASE}/aramco-approval.jpg`],
+    file: `${BASE}/aramco-approval.pdf`,
+    facts: [
+      { label: bi('Vendor code', 'رمز المورد'), value: bi('10110264') },
+      { label: bi('E-reference no.', 'الرقم المرجعي'), value: bi('0006405') },
+      { label: bi('Supplier type', 'نوع المورد'), value: bi('Service provider only', 'مزوّد خدمات فقط') },
+    ],
+  },
+  {
+    id: 'classification',
+    group: 'approvals',
+    title: bi('Municipal services classification', 'تصنيف مقدمي خدمات المدن'),
+    kind: bi('Grade 3, construction and building', 'الدرجة الثالثة، التشييد والبناء'),
+    issuer: bi('Ministry of Municipalities and Housing (Balady)', 'وزارة البلديات والإسكان (بلدي)'),
+    issued: '2024-01-13',
+    expires: '2026-01-13',
+    thumb: `${BASE}/classification-thumb.jpg`,
+    pages: [1, 2, 3, 4, 5, 6].map((n) => `${BASE}/classification-${n}.jpg`),
+    file: `${BASE}/classification.pdf`,
+    wide: true,
+    ratio: 1.414,
+    facts: [
+      { label: bi('Certificate no.', 'رقم الشهادة'), value: bi('2024000484') },
+      { label: bi('Classification', 'التصنيف'), value: bi('Grade 3', 'الدرجة الثالثة') },
+      { label: bi('Credit rating', 'درجة التقييم الائتماني'), value: bi('BB') },
+      { label: bi('Technical score', 'درجة التقييم الفني'), value: bi('82.925') },
+    ],
+  },
+  {
+    id: 'sca-membership',
+    group: 'approvals',
+    title: bi('Saudi Contractors Authority', 'الهيئة السعودية للمقاولين'),
+    kind: bi('Contractor membership certificate', 'شهادة عضوية مقاول'),
+    issuer: bi('Saudi Contractors Authority', 'الهيئة السعودية للمقاولين'),
+    issued: '2025-08-19',
+    expires: '2026-01-11',
+    thumb: `${BASE}/sca-membership-thumb.jpg`,
+    pages: [`${BASE}/sca-membership.jpg`],
+    file: `${BASE}/sca-membership.pdf`,
+    facts: [{ label: bi('Membership no.', 'رقم العضوية'), value: bi('419341932') }],
+  },
+  {
+    id: 'monshaat',
+    group: 'approvals',
+    title: bi('Monsha’at SME certificate', 'شهادة منشآت'),
+    kind: bi('Small and medium enterprise', 'منشأة صغيرة ومتوسطة'),
+    issuer: bi(
+      'Small and Medium Enterprises General Authority (Monsha’at)',
+      'الهيئة العامة للمنشآت الصغيرة والمتوسطة (منشآت)'
+    ),
+    issued: '2025-12-07',
+    expires: '2026-12-07',
+    thumb: `${BASE}/monshaat-thumb.jpg`,
+    pages: [`${BASE}/monshaat.jpg`],
+    file: `${BASE}/monshaat.pdf`,
+    wide: true,
+    ratio: 1.627,
+    facts: [
+      { label: bi('Certificate no.', 'رقم الشهادة'), value: bi('25425282234') },
+      { label: bi('Validity', 'مدة الصلاحية'), value: bi('One year from issue date', 'سنة من تاريخ الإصدار') },
+    ],
+  },
+
+  /* completion and reference letters */
+  {
+    id: 'khyber',
+    group: 'letters',
+    title: bi('Khyber International Construction', 'خيبر إنترناشونال كونستركشن'),
+    kind: bi('Waterproofing, Jazan', 'العزل المائي، جازان'),
+    issuer: bi('Khyber International Construction Co.', 'شركة خيبر إنترناشونال كونستركشن'),
+    issued: '2023-03-25',
+    thumb: `${BASE}/khyber-thumb.jpg`,
+    pages: [`${BASE}/khyber.jpg`],
+    file: `${BASE}/khyber.pdf`,
+    facts: [
+      { label: bi('Project', 'المشروع'), value: bi('Employees Residential Project', 'مشروع سكن الموظفين') },
+      { label: bi('Location', 'الموقع'), value: bi('Jazan', 'جازان') },
+      { label: bi('Scope', 'نطاق العمل'), value: bi('Waterproofing works', 'أعمال العزل المائي') },
+      { label: bi('Completed', 'تاريخ الإنجاز'), value: bi('25 Mar 2023', '25 مارس 2023') },
+    ],
+  },
+  {
+    id: 'kaab',
+    group: 'letters',
+    title: bi('Kaab Modern Contracting', 'شركة الكعب الحديثة للمقاولات'),
+    kind: bi('Waterproofing, Taif', 'العزل المائي، الطائف'),
+    issuer: bi('Kaab Modern Contracting Co. (KMCC)', 'شركة الكعب الحديثة للمقاولات'),
+    issued: '2023-10-10',
+    thumb: `${BASE}/kaab-thumb.jpg`,
+    pages: [`${BASE}/kaab.jpg`],
+    file: `${BASE}/kaab.pdf`,
+    facts: [
+      { label: bi('Location', 'الموقع'), value: bi('Taif City', 'مدينة الطائف') },
+      { label: bi('Scope', 'نطاق العمل'), value: bi('Waterproofing works', 'أعمال العزل المائي') },
+      { label: bi('Completed', 'تاريخ الإنجاز'), value: bi('25 Aug 2023', '25 أغسطس 2023') },
+    ],
+  },
+  {
+    id: 'bedaa',
+    group: 'letters',
+    title: bi('Bedaa Contracting', 'شركة بدائع للمقاولات'),
+    kind: bi('Waterproofing, Taif', 'العزل المائي، الطائف'),
+    issuer: bi('Bedaa Contracting Co.', 'شركة بدائع للمقاولات العامة'),
+    issued: '2023-11-12',
+    thumb: `${BASE}/bedaa-thumb.jpg`,
+    pages: [`${BASE}/bedaa.jpg`],
+    file: `${BASE}/bedaa.pdf`,
+    facts: [
+      { label: bi('Location', 'الموقع'), value: bi('Taif City', 'مدينة الطائف') },
+      { label: bi('Scope', 'نطاق العمل'), value: bi('Waterproofing works', 'أعمال العزل المائي') },
+      { label: bi('Completed', 'تاريخ الإنجاز'), value: bi('29 Aug 2023', '29 أغسطس 2023') },
+    ],
+  },
+  {
+    id: 'fbc',
+    group: 'letters',
+    title: bi('Future Building Contracting (FBC)', 'شركة بناء المستقبل المتميزة (FBC)'),
+    kind: bi('Waterproofing, Riyadh', 'العزل المائي، الرياض'),
+    issuer: bi(
+      'Future Building Distinguished Contracting Company',
+      'شركة بناء المستقبل المتميزة للمقاولات'
+    ),
+    issued: '2024-10-18',
+    thumb: `${BASE}/fbc-thumb.jpg`,
+    pages: [`${BASE}/fbc.jpg`],
+    file: `${BASE}/fbc.pdf`,
+    facts: [
+      { label: bi('Project', 'المشروع'), value: bi('Four Season 119', 'فور سيزن 119') },
+      { label: bi('Location', 'الموقع'), value: bi('Riyadh', 'الرياض') },
+      { label: bi('Scope', 'نطاق العمل'), value: bi('Waterproofing works', 'أعمال العزل المائي') },
+      { label: bi('Completed', 'تاريخ الإنجاز'), value: bi('18 Oct 2024', '18 أكتوبر 2024') },
+    ],
+  },
+  {
+    id: 'ejad',
+    group: 'letters',
+    title: bi('Ejad United Contracting (EUCC)', 'شركة إيجاد المتحدة للمقاولات'),
+    kind: bi('Waterproofing, Abha', 'العزل المائي، أبها'),
+    issuer: bi('Ejad United Contracting Co.', 'شركة إيجاد المتحدة للمقاولات'),
+    issued: '2024-10-25',
+    thumb: `${BASE}/ejad-thumb.jpg`,
+    pages: [`${BASE}/ejad.jpg`],
+    file: `${BASE}/ejad.pdf`,
+    facts: [
+      { label: bi('Project', 'المشروع'), value: bi('Villas & Residential Buildings', 'فلل ومباني سكنية') },
+      { label: bi('Location', 'الموقع'), value: bi('Abha', 'أبها') },
+      { label: bi('Scope', 'نطاق العمل'), value: bi('Waterproofing works', 'أعمال العزل المائي') },
+      { label: bi('Completed', 'تاريخ الإنجاز'), value: bi('25 Oct 2024', '25 أكتوبر 2024') },
+    ],
+  },
+  {
+    id: 'jeddah-first',
+    group: 'letters',
+    title: bi('Jeddah First Group', 'مجموعة جدة الأولى'),
+    kind: bi('Reference letter, Jeddah', 'خطاب تزكية، جدة'),
+    issuer: bi('Jeddah First Group for Real Estate Co.', 'شركة مجموعة جدة الأولى للاستثمارات العقارية'),
+    issued: '2023-08-06',
+    thumb: `${BASE}/jeddah-first-thumb.jpg`,
+    pages: [`${BASE}/jeddah-first.jpg`],
+    file: `${BASE}/jeddah-first.jpg`,
+    facts: [
+      {
+        label: bi('Projects', 'المشاريع'),
+        value: bi('Al Waha, Al Wurud, Al Baghdadiyah, Al Safa', 'الواحة، الورود، البغدادية، الصفا'),
+      },
+      {
+        label: bi('Scope', 'نطاق العمل'),
+        value: bi(
+          'Insulation, gypsum and general finishing of residential buildings',
+          'أعمال العزل والجبس والتشطيبات العامة للمباني السكنية'
+        ),
+      },
+    ],
+  },
+];
+
+const PAPER_ORDER = [
+  'iso-9001', 'iso-14001', 'iso-45001',
+  'classification', 'aramco-approval', 'monshaat', 'sca-membership',
+  'khyber', 'kaab', 'bedaa', 'fbc', 'ejad', 'jeddah-first',
+];
+ITEMS.sort((a, b) => PAPER_ORDER.indexOf(a.id) - PAPER_ORDER.indexOf(b.id));
+
+const GROUPS: { id: GroupId; title: L10n; tab: L10n }[] = [
+  { id: 'standards', title: bi('Management system standards', 'معايير نظم الإدارة'), tab: bi('ISO standards', 'معايير الآيزو') },
+  { id: 'approvals', title: bi('Approvals and registrations', 'الاعتمادات والتسجيلات'), tab: bi('Approvals', 'الاعتمادات') },
+  { id: 'letters', title: bi('Completion and reference letters', 'شهادات الإنجاز وخطابات العملاء'), tab: bi('Client letters', 'خطابات العملاء') },
+];
+
+const REGISTRATIONS = [
+  { id: 'aramco', logo: '/assets/certs/aramco.png', name: bi('Saudi Aramco', 'أرامكو السعودية'), code: bi('Vendor code 10110264', 'رمز المورد 10110264') },
+  { id: 'sec', logo: '/assets/certs/sec.png', name: bi('Saudi Electricity Company', 'الشركة السعودية للكهرباء'), code: bi('Vendor code 2008453', 'رمز المورد 2008453') },
+  { id: 'sca', logo: '/assets/certs/sca.png', name: bi('Saudi Contractors Authority', 'الهيئة السعودية للمقاولين'), code: bi('Membership no. 419341932', 'رقم العضوية 419341932') },
+  { id: 'grade', logo: '/assets/certs/grade3.png', name: bi('Municipal classification', 'تصنيف مقدمي خدمات المدن'), code: bi('Grade 3, certificate 2024000484', 'الدرجة الثالثة، شهادة 2024000484') },
+];
+
+const ROTATIONS = [-1.8, 1.4, -0.8, 2, -1.3, 0.9, -2, 1.1, -0.6, 1.7, -1.5, 0.7, 1.2];
+
+/* ------------------------------------------------------------- helpers */
+const fmtDate = (iso: string, lang: Lang) =>
+  new Intl.DateTimeFormat(lang === 'ar' ? 'ar-u-ca-gregory' : 'en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  }).format(new Date(`${iso}T00:00:00`));
+
+const NOW = Date.now();
+
+function validity(item: CertItem, lang: Lang): { text: string; state: 'valid' | 'ended' | 'issued' } {
+  if (item.expires) {
+    const date = fmtDate(item.expires, lang);
+    const ended = new Date(`${item.expires}T23:59:59`).getTime() < NOW;
+    return ended
+      ? { text: lang === 'ar' ? `انتهت في ${date}` : `Expired ${date}`, state: 'ended' }
+      : { text: lang === 'ar' ? `سارية حتى ${date}` : `Valid until ${date}`, state: 'valid' };
+  }
+  const date = fmtDate(item.issued, lang);
+  return { text: lang === 'ar' ? `صدرت في ${date}` : `Issued ${date}`, state: 'issued' };
+}
+
+function useInView<T extends HTMLElement>(threshold = 0.12) {
+  const ref = useRef<T>(null);
+  const [seen, setSeen] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || seen) return;
+    if (typeof IntersectionObserver === 'undefined') {
+      setSeen(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setSeen(true);
+          io.disconnect();
+        }
+      },
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [seen, threshold]);
+  return [ref, seen] as const;
+}
+
+function useCountUp(target: number, active: boolean, duration = 1300) {
+  const [value, setValue] = useState(0);
+  useEffect(() => {
+    if (!active) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setValue(target);
+      return;
+    }
+    let raf = 0;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const p = Math.min((now - start) / duration, 1);
+      setValue(Math.round(target * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [target, active, duration]);
+  return value;
+}
+
+const Stat: React.FC<{ target: number; active: boolean; label: string }> = ({ target, active, label }) => {
+  const value = useCountUp(target, active);
+  return (
+    <div className="cv-cell">
+      <span className="cv-num">{value}</span>
+      <span className="cv-lbl">{label}</span>
+    </div>
+  );
 };
 
-const CertificateViewer: React.FC<{
-  doc: CertDoc | null;
-  language: string;
+/* ------------------------------------------------------------ one sheet */
+const Paper: React.FC<{
+  item: CertItem;
+  index: number;
+  lang: Lang;
+  onOpen: (id: string, opener: HTMLElement) => void;
+}> = ({ item, index, lang, onOpen }) => {
+  const sheetRef = useRef<HTMLSpanElement>(null);
+  const rotation = ROTATIONS[index % ROTATIONS.length];
+  const status = validity(item, lang);
+  const title = item.title[lang];
+
+  const onMove = (e: React.PointerEvent<HTMLButtonElement>) => {
+    if (e.pointerType !== 'mouse' || !sheetRef.current) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
+    const s = sheetRef.current.style;
+    s.setProperty('--ry', `${((px - 0.5) * 14).toFixed(2)}deg`);
+    s.setProperty('--rx', `${((0.5 - py) * 14).toFixed(2)}deg`);
+    s.setProperty('--gx', `${(px * 100).toFixed(1)}%`);
+    s.setProperty('--gy', `${(py * 100).toFixed(1)}%`);
+  };
+  const onLeave = () => {
+    if (!sheetRef.current) return;
+    const s = sheetRef.current.style;
+    s.setProperty('--rx', '0deg');
+    s.setProperty('--ry', '0deg');
+  };
+
+  return (
+    <button
+      type="button"
+      className={`cv-paper${item.wide ? ' cv-wide' : ''}`}
+      style={{ '--i': index, '--rot': `${rotation}deg`, '--ar': item.ratio ?? 1.42 } as React.CSSProperties}
+      onClick={(e) => onOpen(item.id, e.currentTarget)}
+      onPointerMove={onMove}
+      onPointerLeave={onLeave}
+      aria-label={`${lang === 'ar' ? 'عرض' : 'View'}: ${title}`}
+    >
+      <span className="cv-sheet" ref={sheetRef}>
+        <span className="cv-page">
+          <img src={item.thumb} alt={title} loading="lazy" draggable={false} />
+          <span className="cv-glare" />
+          <span className="cv-open">
+            <FileText size={12} />
+            {item.pages.length > 1
+              ? `${item.pages.length} ${lang === 'ar' ? 'صفحات' : 'pages'}`
+              : lang === 'ar'
+              ? 'عرض الشهادة'
+              : 'View certificate'}
+          </span>
+        </span>
+        {index % 3 === 1 ? (
+          <span className="cv-tape" style={{ '--tape': `${rotation > 0 ? -4 : 3}deg` } as React.CSSProperties} />
+        ) : (
+          <span className="cv-pin" />
+        )}
+      </span>
+      <span className="cv-cap">
+        <span className="cv-cap-title">{title}</span>
+        <span className="cv-cap-kind">{item.kind[lang]}</span>
+        <span className="cv-chip" data-state={status.state}>
+          <i />
+          {status.text}
+        </span>
+      </span>
+    </button>
+  );
+};
+
+/* --------------------------------------------------------------- viewer */
+const Viewer: React.FC<{
+  items: CertItem[];
+  openId: string | null;
+  lang: Lang;
+  onNavigate: (id: string) => void;
   onClose: () => void;
-}> = ({ doc, language, onClose }) => {
+}> = ({ items, openId, lang, onNavigate, onClose }) => {
+  const [zoomed, setZoomed] = useState(false);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const index = openId ? items.findIndex((i) => i.id === openId) : -1;
+  const item = index >= 0 ? items[index] : null;
+  const isAr = lang === 'ar';
+
+  const go = useCallback(
+    (delta: number) => {
+      const next = items[index + delta];
+      if (next) onNavigate(next.id);
+    },
+    [items, index, onNavigate]
+  );
+
+  useEffect(() => setZoomed(false), [openId]);
+
   useEffect(() => {
-    if (!doc) return;
+    if (!item) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowLeft') go(isAr ? 1 : -1);
+      if (e.key === 'ArrowRight') go(isAr ? -1 : 1);
     };
     document.addEventListener('keydown', onKey);
-    const previousOverflow = document.body.style.overflow;
+    const previous = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => {
       document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = previousOverflow;
+      document.body.style.overflow = previous;
     };
-  }, [doc, onClose]);
+  }, [item, go, onClose, isAr]);
 
-  if (!doc) return null;
-  const isAr = language === 'ar';
-  const title = isAr ? doc.ar : doc.en;
+  useEffect(() => {
+    if (item) closeRef.current?.focus();
+    // only when the viewer opens, not on every navigation
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [item === null]);
+
+  if (!item) return null;
+  const status = validity(item, lang);
+  const PrevIcon = isAr ? ChevronRight : ChevronLeft;
+  const NextIcon = isAr ? ChevronLeft : ChevronRight;
+  const fileKind = item.file.endsWith('.pdf') ? 'PDF' : isAr ? 'صورة' : 'image';
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/70"
-      onClick={onClose}
-      role="dialog"
-      aria-modal="true"
-      aria-label={title}
-    >
-      <div
-        className="w-full max-w-3xl max-h-full flex flex-col bg-white rounded-2xl shadow-2xl overflow-hidden"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-slate-200">
-          <div className="min-w-0">
-            <h3 className="text-sm sm:text-base font-bold text-slate-900 truncate">{title}</h3>
-            {(isAr ? doc.subAr : doc.subEn) && (
-              <p className="text-xs text-slate-500 truncate">{isAr ? doc.subAr : doc.subEn}</p>
-            )}
+    <div className="cv-modal" onClick={onClose} role="dialog" aria-modal="true" aria-label={item.title[lang]}>
+      <div className="cv-panel" onClick={(e) => e.stopPropagation()}>
+        <div className="cv-bar">
+          <div className="cv-bar-text">
+            <h3 className="cv-bar-title">{item.title[lang]}</h3>
+            <p className="cv-bar-sub">{item.kind[lang]}</p>
           </div>
-          <div className="flex items-center gap-2 shrink-0">
-            <a
-              href={doc.pdf}
-              download
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-700 hover:bg-red-800 text-white text-xs font-bold transition-colors"
-            >
-              <Download className="w-3.5 h-3.5" />
-              <span>{isAr ? 'تحميل PDF' : 'Download PDF'}</span>
+          <div className="cv-bar-actions">
+            <button type="button" className="cv-ibtn" onClick={() => go(-1)} disabled={index <= 0} aria-label={isAr ? 'السابق' : 'Previous'}>
+              <PrevIcon size={20} />
+            </button>
+            <span className="cv-pos">
+              {index + 1} / {items.length}
+            </span>
+            <button type="button" className="cv-ibtn" onClick={() => go(1)} disabled={index >= items.length - 1} aria-label={isAr ? 'التالي' : 'Next'}>
+              <NextIcon size={20} />
+            </button>
+            <button type="button" className="cv-ibtn" onClick={() => setZoomed((z) => !z)} aria-label={zoomed ? (isAr ? 'تصغير' : 'Zoom out') : isAr ? 'تكبير' : 'Zoom in'}>
+              {zoomed ? <ZoomOut size={19} /> : <ZoomIn size={19} />}
+            </button>
+            <a className="cv-dl" href={item.file} download>
+              <Download size={14} />
+              <span>{isAr ? `تحميل ${fileKind}` : `Download ${fileKind}`}</span>
             </a>
-            <button
-              type="button"
-              onClick={onClose}
-              className="p-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer"
-              aria-label={isAr ? 'إغلاق' : 'Close'}
-            >
-              <X className="w-5 h-5" />
+            <button ref={closeRef} type="button" className="cv-ibtn" onClick={onClose} aria-label={isAr ? 'إغلاق' : 'Close'}>
+              <X size={20} />
             </button>
           </div>
         </div>
 
-        <div className="overflow-y-auto bg-slate-100 p-3 space-y-3">
-          {doc.pages.map((src, i) => (
-            <img
-              key={src}
-              src={src}
-              alt={`${title} - ${i + 1}`}
-              className="w-full h-auto rounded-lg border border-slate-200 bg-white shadow-sm"
-            />
-          ))}
+        <div className="cv-body">
+          <div className="cv-doc" key={item.id}>
+            <div
+              className={`cv-doc-inner${zoomed ? ' is-zoomed' : ''}`}
+              style={{ width: zoomed ? '170%' : '100%', maxWidth: zoomed ? 'none' : item.wide ? '60rem' : '38rem' }}
+            >
+              {item.pages.map((src, i) => (
+                <img key={src} src={src} alt={`${item.title[lang]} (${i + 1})`} onClick={() => setZoomed((z) => !z)} />
+              ))}
+            </div>
+          </div>
+
+          <aside className="cv-info">
+            <dl>
+              <div>
+                <dt>{isAr ? 'الجهة المصدرة' : 'Issued by'}</dt>
+                <dd>{item.issuer[lang]}</dd>
+              </div>
+              <div>
+                <dt>{isAr ? 'تاريخ الإصدار' : 'Issue date'}</dt>
+                <dd>{fmtDate(item.issued, lang)}</dd>
+              </div>
+              {item.expires && (
+                <div>
+                  <dt>{isAr ? 'تاريخ الانتهاء' : 'Expiry date'}</dt>
+                  <dd>
+                    <span className="cv-chip" data-state={status.state}>
+                      <i />
+                      {status.text}
+                    </span>
+                  </dd>
+                </div>
+              )}
+              {item.facts.map((f) => (
+                <div key={f.label.en}>
+                  <dt>{f.label[lang]}</dt>
+                  <dd>{f.value[lang]}</dd>
+                </div>
+              ))}
+            </dl>
+          </aside>
         </div>
       </div>
     </div>
   );
 };
 
+/* -------------------------------------------------------------- section */
 export const CertificationsSection: React.FC = () => {
   const { t, language } = useLanguage();
-  const [openDoc, setOpenDoc] = useState<CertDoc | null>(null);
-  const closeDoc = useCallback(() => setOpenDoc(null), []);
+  const lang: Lang = language === 'ar' ? 'ar' : 'en';
+  const [filter, setFilter] = useState<FilterId>('all');
+  const [openId, setOpenId] = useState<string | null>(null);
+  const openerRef = useRef<HTMLElement | null>(null);
+  const spotRef = useRef<HTMLDivElement>(null);
+  const [statsRef, statsSeen] = useInView<HTMLDivElement>(0.4);
+  const [boardRef, boardSeen] = useInView<HTMLDivElement>(0.08);
 
-  const certificationsList = [
-    {
-      id: 'iso',
-      title: t.certifications.isoTitle,
-      desc: t.certifications.isoDesc,
-      tag: 'ISO 9001 / 14001 / 45001',
-      org: 'International Organization for Standardization',
-      logo: IsoLogo,
-      accentColor: 'border-blue-600',
-    },
-    {
-      id: 'aramco',
-      title: t.certifications.aramcoTitle,
-      desc: t.certifications.aramcoDesc,
-      tag: 'Approved Vendor & Contractor',
-      org: 'Saudi Arabian Oil Company',
-      logo: RealAramco,
-      accentColor: 'border-cyan-600',
-    },
-    {
-      id: 'sec',
-      title: t.certifications.secTitle,
-      desc: t.certifications.secDesc,
-      tag: 'SEC Vendor & Contractor',
-      org: 'Saudi Electricity Company',
-      logo: RealSec,
-      accentColor: 'border-amber-600',
-    },
-    {
-      id: 'classification',
-      title: t.certifications.classificationTitle,
-      desc: t.certifications.classificationDesc,
-      tag: 'Classification',
-      org: 'Saudi Contractors Authority',
-      logo: RealGrade,
-      accentColor: 'border-yellow-600',
-    },
-    {
-      id: 'sac',
-      title: t.certifications.sacTitle,
-      desc: t.certifications.sacDesc,
-      tag: 'SCA Membership',
-      org: 'Saudi Contractors Authority',
-      logo: RealSca,
-      accentColor: 'border-emerald-600',
-    },
+  const visibleGroups = GROUPS.filter((g) => filter === 'all' || g.id === filter).map((g) => ({
+    ...g,
+    items: ITEMS.filter((i) => i.group === g.id),
+  }));
+  const flat = visibleGroups.flatMap((g) => g.items);
+
+  const tabs: { id: FilterId; label: string; count: number }[] = [
+    { id: 'all', label: lang === 'ar' ? 'الكل' : 'All documents', count: ITEMS.length },
+    ...GROUPS.map((g) => ({ id: g.id as FilterId, label: g.tab[lang], count: ITEMS.filter((i) => i.group === g.id).length })),
   ];
 
+  const open = useCallback((id: string, opener: HTMLElement) => {
+    openerRef.current = opener;
+    setOpenId(id);
+  }, []);
+  const close = useCallback(() => {
+    setOpenId(null);
+    openerRef.current?.focus();
+  }, []);
+
+  const onSpot = (e: React.PointerEvent<HTMLElement>) => {
+    if (e.pointerType !== 'mouse' || !spotRef.current) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    spotRef.current.style.setProperty('--mx', `${e.clientX - r.left}px`);
+    spotRef.current.style.setProperty('--my', `${e.clientY - r.top}px`);
+  };
+
+  let running = 0;
+
   return (
-    <section id="certifications" className="py-16 bg-white border-b border-slate-200/80">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-red-700 mb-2">
-              <span className="w-6 h-0.5 bg-red-700" />
-              <span>{t.certifications.kicker}</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
-              {t.certifications.title}
-            </h2>
-            <p className="text-sm sm:text-base text-slate-600 mt-2 max-w-2xl">
-              {t.certifications.subtitle}
+    <section id="certifications" className="cv-section" onPointerMove={onSpot}>
+      <div className="cv-grid" aria-hidden="true" />
+      <div className="cv-spot" ref={spotRef} aria-hidden="true" />
+
+      <div className="cv-wrap">
+        <header className="cv-head">
+          <div>
+            <p className="cv-kicker">
+              <i />
+              {t.certifications.kicker}
             </p>
+            <h2 className="cv-title">{t.certifications.title}</h2>
+            <p className="cv-sub">{t.certifications.subtitle}</p>
           </div>
 
-          <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-red-50 border border-red-200/80 text-red-800 font-bold text-xs shrink-0 shadow-xs">
-            <ShieldCheck className="w-4 h-4 text-red-700" />
-            <span>{t.certifications.certifiedFrom}</span>
+          <div className="cv-block" ref={statsRef}>
+            <div className="cv-block-title">{lang === 'ar' ? 'ملف الاعتمادات' : 'Credentials on file'}</div>
+            <Stat target={ITEMS.length} active={statsSeen} label={lang === 'ar' ? 'مستند' : 'Documents'} />
+            <Stat target={ITEMS.filter((i) => i.group === 'standards').length} active={statsSeen} label={lang === 'ar' ? 'معايير آيزو' : 'ISO standards'} />
+            <Stat target={ITEMS.filter((i) => i.group === 'letters').length} active={statsSeen} label={lang === 'ar' ? 'خطابات عملاء' : 'Client letters'} />
           </div>
+        </header>
+
+        <div className="cv-tabs" role="tablist" aria-label={lang === 'ar' ? 'تصفية الشهادات' : 'Filter certificates'}>
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              role="tab"
+              aria-selected={filter === tab.id}
+              className="cv-tab"
+              onClick={() => setFilter(tab.id)}
+            >
+              {tab.label}
+              <b>{tab.count}</b>
+            </button>
+          ))}
         </div>
 
-        {/* 5 Certification Cards - each shows its uploaded certificate(s) underneath */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-5 mb-10">
-          {certificationsList.map((item, index) => {
-            const LogoComponent = item.logo;
-            const docs = CERT_DOCS[item.id] ?? [];
-            return (
-              <div
-                key={item.id}
-                className={`group flex flex-col justify-between p-5 bg-slate-50/70 rounded-2xl border border-slate-200/90 hover:border-red-700/60 hover:bg-white hover:shadow-xl transition-all duration-200 ${
-                  index < 3 ? 'lg:col-span-2' : 'lg:col-span-3'
-                }`}
-              >
-                <div>
-                  {/* Top Vector Logo Display */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="transition-transform group-hover:scale-105">
-                      <LogoComponent className={item.id === 'iso' ? 'w-14 h-14 drop-shadow-xs' : 'h-14 w-auto max-w-[7.5rem] object-contain'} />
-                    </div>
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-full flex items-center gap-1">
-                      <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                      <span>{language === 'ar' ? 'معتمد' : 'Verified'}</span>
-                    </span>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-base font-bold text-slate-900 group-hover:text-red-700 transition-colors mb-1.5 leading-snug">
-                    {item.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                    {item.desc}
-                  </p>
-
-                  {/* Uploaded certificate documents */}
-                  {docs.length > 0 && (
-                    <div className="grid grid-cols-3 gap-3 mb-4">
-                      {docs.map((doc) => (
-                        <button
-                          key={doc.id}
-                          type="button"
-                          onClick={() => setOpenDoc(doc)}
-                          className="group/doc text-start cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-red-700 rounded-lg"
-                          aria-label={`${language === 'ar' ? 'عرض' : 'View'} ${language === 'ar' ? doc.ar : doc.en}`}
-                        >
-                          <div
-                            className={`relative overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xs group-hover/doc:border-red-700/60 group-hover/doc:shadow-md transition-all ${
-                              doc.landscape ? 'aspect-[4/3]' : 'aspect-[3/4]'
-                            }`}
-                          >
-                            <img
-                              src={doc.thumb}
-                              alt={language === 'ar' ? doc.ar : doc.en}
-                              loading="lazy"
-                              className="w-full h-full object-cover object-top"
-                            />
-                            <span className="absolute bottom-1 end-1 inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-slate-900/75 text-white text-[9px] font-bold">
-                              <FileText className="w-2.5 h-2.5" />
-                              {doc.pages.length > 1
-                                ? `${doc.pages.length} ${language === 'ar' ? 'صفحات' : 'pages'}`
-                                : language === 'ar'
-                                ? 'عرض'
-                                : 'View'}
-                            </span>
-                          </div>
-                          <span className="block mt-1.5 text-[11px] font-bold text-slate-800 leading-tight group-hover/doc:text-red-700 transition-colors">
-                            {language === 'ar' ? doc.ar : doc.en}
-                          </span>
-                          {(language === 'ar' ? doc.subAr : doc.subEn) && (
-                            <span className="block text-[10px] text-slate-500 leading-tight mt-0.5">
-                              {language === 'ar' ? doc.subAr : doc.subEn}
-                            </span>
-                          )}
-                        </button>
-                      ))}
+        <div ref={boardRef} className={`cv-boardwrap${boardSeen ? ' is-in' : ''}`}>
+          <div key={filter}>
+            {visibleGroups.map((group) => (
+              <div className="cv-group" key={group.id}>
+                <div className="cv-group-head">
+                  <h3>{group.title[lang]}</h3>
+                  <span className="cv-rule" />
+                  <span className="cv-group-count">{group.items.length}</span>
+                </div>
+                <div className="cv-papers">
+                  {group.items.map((item) => (
+                    <Paper key={item.id} item={item} index={running++} lang={lang} onOpen={open} />
+                  ))}
+                  {group.id === 'standards' && (
+                    <div className="cv-note">
+                      <h4>{lang === 'ar' ? 'نطاق الاعتماد' : 'What the certificates cover'}</h4>
+                      <p>{ISO_SCOPE[lang]}</p>
+                      <p>{ISO_ISSUER[lang]}</p>
                     </div>
                   )}
                 </div>
-
-                {/* Bottom Tag */}
-                <div className="pt-3 border-t border-slate-200/80">
-                  <span className="text-[10px] font-bold tracking-wider uppercase text-slate-500 block truncate">
-                    {item.tag}
-                  </span>
-                </div>
               </div>
-            );
-          })}
-        </div>
-
-        {/* Continuous Quick Trust Strip with All 5 Names - Clean Light Theme */}
-        <div className="p-4 rounded-xl bg-slate-50 text-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 text-xs border border-slate-200 shadow-xs">
-          <div className="flex items-center gap-2 text-red-700 font-extrabold uppercase tracking-wider text-[11px]">
-            <Award className="w-4 h-4 text-red-700" />
-            <span>{t.certifications.certifiedFrom}</span>
+            ))}
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-slate-700 font-bold text-xs">
-            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white border border-slate-200 shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-blue-500" />
-              <span>ISO 9001, 14001 & 45001</span>
-            </span>
-            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white border border-slate-200 shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-cyan-500" />
-              <span>SAUDI ARAMCO</span>
-            </span>
-            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white border border-slate-200 shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-amber-500" />
-              <span>SEC (الكهرباء)</span>
-            </span>
-            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white border border-slate-200 shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-yellow-500" />
-              <span>CLASSIFICATION (التصنيف)</span>
-            </span>
-            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white border border-slate-200 shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-emerald-500" />
-              <span>SCA (الهيئة السعودية للمقاولين)</span>
-            </span>
+          <div className="cv-reg">
+            <h3 className="cv-reg-title">{lang === 'ar' ? 'مسجّلون ومعتمدون لدى' : 'Registered and approved with'}</h3>
+            <div className="cv-reg-list">
+              {REGISTRATIONS.map((r, i) => (
+                <div className="cv-reg-item" key={r.id} style={{ '--i': i } as React.CSSProperties}>
+                  <span className="cv-reg-logo">
+                    <img src={r.logo} alt="" loading="lazy" />
+                  </span>
+                  <span>
+                    <span className="cv-reg-name">{r.name[lang]}</span>
+                    <span className="cv-reg-code">{r.code[lang]}</span>
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
-      <CertificateViewer doc={openDoc} language={language} onClose={closeDoc} />
+      <Viewer items={flat} openId={openId} lang={lang} onNavigate={setOpenId} onClose={close} />
     </section>
   );
 };
