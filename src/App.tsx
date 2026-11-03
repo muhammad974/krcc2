@@ -25,7 +25,7 @@ function MainWebsite() {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 400);
 
-      const sections = ['hero', 'certifications', 'about', 'services', 'materials', 'vendors', 'projects', 'contact'];
+      const sections = ['hero', 'about', 'services', 'materials', 'vendors', 'projects', 'certifications', 'contact'];
       for (const sectionId of sections) {
         const el = document.getElementById(sectionId);
         if (el) {
@@ -79,9 +79,6 @@ function MainWebsite() {
           onContactTeam={() => scrollTo('contact')}
         />
 
-        {/* 2. Certifications & Accreditations (ISO, ARAMCO, SEC, CLASSIFICATION, SAC) */}
-        <CertificationsSection />
-
         {/* 3. About Us Section */}
         <AboutSection
           onOpenProfileModal={() => setProfileModalOpen(true)}
@@ -105,7 +102,10 @@ function MainWebsite() {
           onRequestQuoteWithProject={(title) => handleRequestQuoteWithService(`Project Reference: ${title}`)}
         />
 
-        {/* 6. Contact Us & Request a Quote Section */}
+        {/* 7. Certifications & Accreditations (ISO x3, ARAMCO, SEC, CLASSIFICATION, SCA) - just before Contact Us */}
+        <CertificationsSection />
+
+        {/* 8. Contact Us & Request a Quote Section */}
         <ContactSection
           initialService={selectedServiceForQuote}
           initialMaterial={selectedMaterialForQuote}

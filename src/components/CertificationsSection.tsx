@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { ShieldCheck, CheckCircle2, Award, ExternalLink } from 'lucide-react';
+import { ShieldCheck, CheckCircle2, Award, ExternalLink, X, Download, FileText } from 'lucide-react';
 
 // ==================== AUTHENTIC VECTOR LOGOS ====================
 
@@ -140,15 +140,182 @@ const RealSec = imgLogo('sec.png', 'Saudi Electricity Company logo');
 const RealSca = imgLogo('sca.png', 'Saudi Contractors Authority logo');
 const RealGrade = imgLogo('grade3.png', 'Classification');
 
+
+// ---------- Certificate documents (files live in /public/assets/certificates) ----------
+interface CertDoc {
+  id: string;
+  en: string;
+  ar: string;
+  subEn?: string;
+  subAr?: string;
+  thumb: string;
+  pages: string[];
+  pdf: string;
+  landscape?: boolean;
+}
+
+const CERT_BASE = '/assets/certificates';
+
+const CERT_DOCS: Record<string, CertDoc[]> = {
+  iso: [
+    {
+      id: 'iso-9001',
+      en: 'ISO 9001:2015',
+      ar: 'آيزو 9001:2015',
+      subEn: 'Quality Management',
+      subAr: 'إدارة الجودة',
+      thumb: `${CERT_BASE}/iso-9001.jpg`,
+      pages: [`${CERT_BASE}/iso-9001.jpg`],
+      pdf: `${CERT_BASE}/iso-9001.pdf`,
+    },
+    {
+      id: 'iso-14001',
+      en: 'ISO 14001:2015',
+      ar: 'آيزو 14001:2015',
+      subEn: 'Environmental Management',
+      subAr: 'الإدارة البيئية',
+      thumb: `${CERT_BASE}/iso-14001.jpg`,
+      pages: [`${CERT_BASE}/iso-14001.jpg`],
+      pdf: `${CERT_BASE}/iso-14001.pdf`,
+    },
+    {
+      id: 'iso-45001',
+      en: 'ISO 45001:2018',
+      ar: 'آيزو 45001:2018',
+      subEn: 'Health & Safety',
+      subAr: 'الصحة والسلامة المهنية',
+      thumb: `${CERT_BASE}/iso-45001.jpg`,
+      pages: [`${CERT_BASE}/iso-45001.jpg`],
+      pdf: `${CERT_BASE}/iso-45001.pdf`,
+    },
+  ],
+  aramco: [
+    {
+      id: 'aramco-approval',
+      en: 'Registration Approval Letter',
+      ar: 'خطاب اعتماد التسجيل',
+      subEn: 'Saudi Aramco',
+      subAr: 'أرامكو السعودية',
+      thumb: `${CERT_BASE}/aramco-approval.jpg`,
+      pages: [`${CERT_BASE}/aramco-approval.jpg`],
+      pdf: `${CERT_BASE}/aramco-approval.pdf`,
+    },
+  ],
+  classification: [
+    {
+      id: 'classification',
+      en: 'Classification Certificate',
+      ar: 'شهادة التصنيف',
+      subEn: 'Municipal Services Provider Classification',
+      subAr: 'تصنيف مقدمي خدمات المدن',
+      thumb: `${CERT_BASE}/classification-1.jpg`,
+      pages: [1, 2, 3, 4, 5, 6].map((n) => `${CERT_BASE}/classification-${n}.jpg`),
+      pdf: `${CERT_BASE}/classification.pdf`,
+      landscape: true,
+    },
+  ],
+  sca: [
+    {
+      id: 'sca-membership',
+      en: 'Membership Certificate',
+      ar: 'شهادة عضوية مقاول',
+      subEn: 'Saudi Contractors Authority',
+      subAr: 'الهيئة السعودية للمقاولين',
+      thumb: `${CERT_BASE}/sca.jpg`,
+      pages: [`${CERT_BASE}/sca.jpg`],
+      pdf: `${CERT_BASE}/sca.pdf`,
+    },
+  ],
+};
+
+const CertificateViewer: React.FC<{
+  doc: CertDoc | null;
+  language: string;
+  onClose: () => void;
+}> = ({ doc, language, onClose }) => {
+  useEffect(() => {
+    if (!doc) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', onKey);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [doc, onClose]);
+
+  if (!doc) return null;
+  const isAr = language === 'ar';
+  const title = isAr ? doc.ar : doc.en;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/70"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
+    >
+      <div
+        className="w-full max-w-3xl max-h-full flex flex-col bg-white rounded-2xl shadow-2xl overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-slate-200">
+          <div className="min-w-0">
+            <h3 className="text-sm sm:text-base font-bold text-slate-900 truncate">{title}</h3>
+            {(isAr ? doc.subAr : doc.subEn) && (
+              <p className="text-xs text-slate-500 truncate">{isAr ? doc.subAr : doc.subEn}</p>
+            )}
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <a
+              href={doc.pdf}
+              download
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-700 hover:bg-red-800 text-white text-xs font-bold transition-colors"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>{isAr ? 'تحميل PDF' : 'Download PDF'}</span>
+            </a>
+            <button
+              type="button"
+              onClick={onClose}
+              className="p-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer"
+              aria-label={isAr ? 'إغلاق' : 'Close'}
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        <div className="overflow-y-auto bg-slate-100 p-3 space-y-3">
+          {doc.pages.map((src, i) => (
+            <img
+              key={src}
+              src={src}
+              alt={`${title} - ${i + 1}`}
+              className="w-full h-auto rounded-lg border border-slate-200 bg-white shadow-sm"
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const CertificationsSection: React.FC = () => {
   const { t, language } = useLanguage();
+  const [openDoc, setOpenDoc] = useState<CertDoc | null>(null);
+  const closeDoc = useCallback(() => setOpenDoc(null), []);
 
   const certificationsList = [
     {
       id: 'iso',
       title: t.certifications.isoTitle,
       desc: t.certifications.isoDesc,
-      tag: 'ISO 9001 / 45001',
+      tag: 'ISO 9001 / 14001 / 45001',
       org: 'International Organization for Standardization',
       logo: IsoLogo,
       accentColor: 'border-blue-600',
@@ -215,14 +382,17 @@ export const CertificationsSection: React.FC = () => {
           </div>
         </div>
 
-        {/* 5 Certifications Cards with Distinctive Logos */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 mb-10">
-          {certificationsList.map((item) => {
+        {/* 5 Certification Cards - each shows its uploaded certificate(s) underneath */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-5 mb-10">
+          {certificationsList.map((item, index) => {
             const LogoComponent = item.logo;
+            const docs = CERT_DOCS[item.id] ?? [];
             return (
               <div
                 key={item.id}
-                className="group flex flex-col justify-between p-5 bg-slate-50/70 rounded-2xl border border-slate-200/90 hover:border-red-700/60 hover:bg-white hover:shadow-xl transition-all duration-200"
+                className={`group flex flex-col justify-between p-5 bg-slate-50/70 rounded-2xl border border-slate-200/90 hover:border-red-700/60 hover:bg-white hover:shadow-xl transition-all duration-200 ${
+                  index < 3 ? 'lg:col-span-2' : 'lg:col-span-3'
+                }`}
               >
                 <div>
                   {/* Top Vector Logo Display */}
@@ -245,6 +415,50 @@ export const CertificationsSection: React.FC = () => {
                   <p className="text-xs text-slate-600 leading-relaxed mb-4">
                     {item.desc}
                   </p>
+
+                  {/* Uploaded certificate documents */}
+                  {docs.length > 0 && (
+                    <div className="grid grid-cols-3 gap-3 mb-4">
+                      {docs.map((doc) => (
+                        <button
+                          key={doc.id}
+                          type="button"
+                          onClick={() => setOpenDoc(doc)}
+                          className="group/doc text-start cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-red-700 rounded-lg"
+                          aria-label={`${language === 'ar' ? 'عرض' : 'View'} ${language === 'ar' ? doc.ar : doc.en}`}
+                        >
+                          <div
+                            className={`relative overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xs group-hover/doc:border-red-700/60 group-hover/doc:shadow-md transition-all ${
+                              doc.landscape ? 'aspect-[4/3]' : 'aspect-[3/4]'
+                            }`}
+                          >
+                            <img
+                              src={doc.thumb}
+                              alt={language === 'ar' ? doc.ar : doc.en}
+                              loading="lazy"
+                              className="w-full h-full object-cover object-top"
+                            />
+                            <span className="absolute bottom-1 end-1 inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-slate-900/75 text-white text-[9px] font-bold">
+                              <FileText className="w-2.5 h-2.5" />
+                              {doc.pages.length > 1
+                                ? `${doc.pages.length} ${language === 'ar' ? 'صفحات' : 'pages'}`
+                                : language === 'ar'
+                                ? 'عرض'
+                                : 'View'}
+                            </span>
+                          </div>
+                          <span className="block mt-1.5 text-[11px] font-bold text-slate-800 leading-tight group-hover/doc:text-red-700 transition-colors">
+                            {language === 'ar' ? doc.ar : doc.en}
+                          </span>
+                          {(language === 'ar' ? doc.subAr : doc.subEn) && (
+                            <span className="block text-[10px] text-slate-500 leading-tight mt-0.5">
+                              {language === 'ar' ? doc.subAr : doc.subEn}
+                            </span>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* Bottom Tag */}
@@ -268,7 +482,7 @@ export const CertificationsSection: React.FC = () => {
           <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-slate-700 font-bold text-xs">
             <span className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white border border-slate-200 shadow-xs">
               <span className="w-2 h-2 rounded-full bg-blue-500" />
-              <span>ISO 9001 & 45001</span>
+              <span>ISO 9001, 14001 & 45001</span>
             </span>
             <span className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white border border-slate-200 shadow-xs">
               <span className="w-2 h-2 rounded-full bg-cyan-500" />
@@ -289,6 +503,8 @@ export const CertificationsSection: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <CertificateViewer doc={openDoc} language={language} onClose={closeDoc} />
     </section>
   );
 };
