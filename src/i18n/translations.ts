@@ -76,9 +76,9 @@ export const translations = {
     },
     certifications: {
       kicker: 'Accreditations & Certifications',
-      title: 'Certified & Approved Contractor Accreditations',
+      title: 'Certified, classified and approved',
       subtitle:
-        'Demonstrating rigorous adherence to international management standards, industrial safety codes, and Tier-1 Saudi project pre-qualification criteria.',
+        'Every document here is a scan of the original. Open any certificate to read it in full or download the PDF.',
       certifiedFrom: 'Certified & Pre-Qualified From:',
       isoTitle: 'ISO Certified',
       isoDesc: 'ISO 9001:2015 Quality, ISO 14001:2015 Environmental and ISO 45001:2018 Occupational Health & Safety Management Systems',
@@ -283,9 +283,9 @@ export const translations = {
     },
     certifications: {
       kicker: 'الاعتمادات والتأهيل الهندسي',
-      title: 'شهادات الاعتماد والتصنيف والتأهيل المعتمدة',
+      title: 'معتمدون ومصنّفون ومؤهلون',
       subtitle:
-        'ملتزمون بأعلى معايير إدارة الجودة العالمية، واشتراطات السلامة المهنية، ومعايير التأهيل المسبق لدى كبرى الهيئات والمؤسسات في المملكة.',
+        'كل مستند هنا نسخة ممسوحة من الأصل. افتح أي شهادة لقراءتها كاملة أو حمّل ملف PDF.',
       certifiedFrom: 'معتمدون ومؤهلون رسمياً من:',
       isoTitle: 'شهادة الآيزو (ISO)',
       isoDesc: 'نظم إدارة الجودة ISO 9001:2015 والبيئة ISO 14001:2015 والصحة والسلامة المهنية ISO 45001:2018',

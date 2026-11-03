@@ -1,0 +1,16 @@
+{
+  "_help": "Har entry: [x, y, size] (chauthi value 'over' ho to logo gehre rang wali seal par bhi saaf dikhta hai) = stamp ka center (0-1, page ki width/height ka hissa) aur logo ki chaudai (page width ka hissa). Key = certificate ka naam (id), ya kisi ek page ke liye 'classification-3'. Jis certificate ki entry nahi hogi usme neeche-baayen default jagah par logo lagega.",
+  "iso-9001":        [[0.12, 0.09, 0.15], [0.60, 0.795, 0.15], [0.09, 0.905, 0.15, "over"]],
+  "iso-14001":       [[0.12, 0.09, 0.15], [0.60, 0.795, 0.15], [0.09, 0.905, 0.15, "over"]],
+  "iso-45001":       [[0.12, 0.09, 0.15], [0.60, 0.795, 0.15], [0.09, 0.905, 0.15, "over"]],
+  "aramco-approval": [[0.72, 0.67, 0.12]],
+  "sca-membership":  [[0.25, 0.62, 0.16]],
+  "monshaat":        [[0.92, 0.18, 0.13]],
+  "classification":  [[0.14, 0.89, 0.12]],
+  "khyber":          [[0.26, 0.75, 0.19]],
+  "kaab":            [[0.385, 0.605, 0.11]],
+  "bedaa":           [[0.55, 0.485, 0.17]],
+  "fbc":             [[0.27, 0.60, 0.20]],
+  "ejad":            [[0.47, 0.745, 0.18]],
+  "jeddah-first":    [[0.23, 0.66, 0.17]]
+}

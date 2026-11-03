@@ -276,7 +276,7 @@ const ITEMS: CertItem[] = [
     issued: '2023-08-06',
     thumb: `${BASE}/jeddah-first-thumb.jpg`,
     pages: [`${BASE}/jeddah-first.jpg`],
-    file: `${BASE}/jeddah-first.jpg`,
+    file: `${BASE}/jeddah-first.pdf`,
     facts: [
       {
         label: bi('Projects', 'المشاريع'),
@@ -312,6 +312,10 @@ const REGISTRATIONS = [
   { id: 'sca', logo: '/assets/certs/sca.png', name: bi('Saudi Contractors Authority', 'الهيئة السعودية للمقاولين'), code: bi('Membership no. 419341932', 'رقم العضوية 419341932') },
   { id: 'grade', logo: '/assets/certs/grade3.png', name: bi('Municipal classification', 'تصنيف مقدمي خدمات المدن'), code: bi('Grade 3, certificate 2024000484', 'الدرجة الثالثة، شهادة 2024000484') },
 ];
+
+/* Every certificate image already has the KRCC watermark burned into its pixels
+   (npm run watermark). This only stops casual right-click / drag saving. */
+const blockSave = (e: React.SyntheticEvent) => e.preventDefault();
 
 const ROTATIONS = [-1.8, 1.4, -0.8, 2, -1.3, 0.9, -2, 1.1, -0.6, 1.7, -1.5, 0.7, 1.2];
 
@@ -435,7 +439,7 @@ const Paper: React.FC<{
     >
       <span className="cv-sheet" ref={sheetRef}>
         <span className="cv-page">
-          <img src={item.thumb} alt={title} loading="lazy" draggable={false} />
+          <img src={item.thumb} alt={title} loading="lazy" draggable={false} onContextMenu={blockSave} />
           <span className="cv-glare" />
           <span className="cv-open">
             <FileText size={12} />
@@ -554,7 +558,7 @@ const Viewer: React.FC<{
               style={{ width: zoomed ? '170%' : '100%', maxWidth: zoomed ? 'none' : item.wide ? '60rem' : '38rem' }}
             >
               {item.pages.map((src, i) => (
-                <img key={src} src={src} alt={`${item.title[lang]} (${i + 1})`} onClick={() => setZoomed((z) => !z)} />
+                <img key={src} src={src} alt={`${item.title[lang]} (${i + 1})`} draggable={false} onContextMenu={blockSave} onDragStart={blockSave} onClick={() => setZoomed((z) => !z)} />
               ))}
             </div>
           </div>

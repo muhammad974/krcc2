@@ -686,3 +686,11 @@ html[dir='rtl'] .cv-rule { transform-origin: right center; }
   .cv-rule { transform: scaleX(1); }
   .cv-sheet { transition: none; }
 }
+
+/* certificate images: no drag / long-press save / text-selection */
+.cv-page img,
+.cv-doc-inner img {
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
