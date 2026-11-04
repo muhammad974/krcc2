@@ -12,7 +12,7 @@ import {
 import './certificates.css';
 
 type Lang = 'en' | 'ar';
-type GroupId = 'standards' | 'government' | 'aramco' | 'manufacturers' | 'letters' | 'profile';
+type GroupId = 'government' | 'standards' | 'completion' | 'material' | 'profile';
 type FilterId = 'all' | GroupId;
 
 interface L10n {
@@ -111,7 +111,7 @@ const ITEMS: CertItem[] = [
   /* approvals and registrations */
   {
     id: 'aramco-approval',
-    group: 'aramco',
+    group: 'material',
     title: bi('Saudi Aramco registration', 'تسجيل أرامكو السعودية'),
     kind: bi('Registration approval letter', 'خطاب اعتماد التسجيل'),
     issuer: bi('Saudi Aramco, Supplier Registration Unit', 'أرامكو السعودية، وحدة تسجيل الموردين'),
@@ -183,7 +183,7 @@ const ITEMS: CertItem[] = [
   /* completion and reference letters */
   {
     id: 'khyber',
-    group: 'letters',
+    group: 'completion',
     title: bi('Khyber International Construction', 'خيبر إنترناشونال كونستركشن'),
     kind: bi('Waterproofing, Jazan', 'العزل المائي، جازان'),
     issuer: bi('Khyber International Construction Co.', 'شركة خيبر إنترناشونال كونستركشن'),
@@ -200,7 +200,7 @@ const ITEMS: CertItem[] = [
   },
   {
     id: 'kaab',
-    group: 'letters',
+    group: 'completion',
     title: bi('Kaab Modern Contracting', 'شركة الكعب الحديثة للمقاولات'),
     kind: bi('Waterproofing, Taif', 'العزل المائي، الطائف'),
     issuer: bi('Kaab Modern Contracting Co. (KMCC)', 'شركة الكعب الحديثة للمقاولات'),
@@ -216,7 +216,7 @@ const ITEMS: CertItem[] = [
   },
   {
     id: 'bedaa',
-    group: 'letters',
+    group: 'completion',
     title: bi('Bedaa Contracting', 'شركة بدائع للمقاولات'),
     kind: bi('Waterproofing, Taif', 'العزل المائي، الطائف'),
     issuer: bi('Bedaa Contracting Co.', 'شركة بدائع للمقاولات العامة'),
@@ -232,7 +232,7 @@ const ITEMS: CertItem[] = [
   },
   {
     id: 'fbc',
-    group: 'letters',
+    group: 'completion',
     title: bi('Future Building Contracting (FBC)', 'شركة بناء المستقبل المتميزة (FBC)'),
     kind: bi('Waterproofing, Riyadh', 'العزل المائي، الرياض'),
     issuer: bi(
@@ -252,7 +252,7 @@ const ITEMS: CertItem[] = [
   },
   {
     id: 'ejad',
-    group: 'letters',
+    group: 'completion',
     title: bi('Ejad United Contracting (EUCC)', 'شركة إيجاد المتحدة للمقاولات'),
     kind: bi('Waterproofing, Abha', 'العزل المائي، أبها'),
     issuer: bi('Ejad United Contracting Co.', 'شركة إيجاد المتحدة للمقاولات'),
@@ -269,7 +269,7 @@ const ITEMS: CertItem[] = [
   },
   {
     id: 'jeddah-first',
-    group: 'letters',
+    group: 'completion',
     title: bi('Jeddah First Group', 'مجموعة جدة الأولى'),
     kind: bi('Reference letter, Jeddah', 'خطاب تزكية، جدة'),
     issuer: bi('Jeddah First Group for Real Estate Co.', 'شركة مجموعة جدة الأولى للاستثمارات العقارية'),
@@ -312,7 +312,7 @@ const ITEMS: CertItem[] = [
   },
   {
     id: 'aramco-fmar',
-    group: 'aramco',
+    group: 'material',
     title: bi('Aramco material approval (FMAR)', 'اعتماد مواد أرامكو (FMAR)'),
     kind: bi('Waterproofing PVC membrane, Jafurah', 'غشاء PVC للعزل المائي، الجافورة'),
     issuer: bi('Saudi Aramco, document transmittal and field material approval request', 'أرامكو السعودية، مراسلة المستندات وطلب اعتماد المواد'),
@@ -330,7 +330,7 @@ const ITEMS: CertItem[] = [
   },
   {
     id: 'mapei-applicator',
-    group: 'manufacturers',
+    group: 'material',
     title: bi('Mapei approved applicator', 'مطبّق معتمد من مابي'),
     kind: bi('Mapefloor flooring systems', 'أنظمة أرضيات Mapefloor'),
     issuer: bi('Mapei Saudia (Sole Shareholder L.L.C.)', 'مابي السعودية (شركة شخص واحد ذ.م.م)'),
@@ -346,7 +346,7 @@ const ITEMS: CertItem[] = [
   },
   {
     id: 'fosroc-applicator',
-    group: 'manufacturers',
+    group: 'material',
     title: bi('Fosroc approved applicator', 'مطبّق معتمد من فوسروك'),
     kind: bi('Waterproofing, epoxy flooring and repair systems', 'العزل المائي وأرضيات الإيبوكسي وأنظمة الإصلاح'),
     issuer: bi('Fosam Company Limited (Saudi Fosroc)', 'شركة فوسام المحدودة (فوسروك السعودية)'),
@@ -362,7 +362,7 @@ const ITEMS: CertItem[] = [
   },
   {
     id: 'kingspan-applicator',
-    group: 'manufacturers',
+    group: 'material',
     title: bi('Kingspan authorised applicator', 'مطبّق معتمد من كينغسباين'),
     kind: bi('Kingspan Therma TR27', 'Kingspan Therma TR27'),
     issuer: bi('Kingspan Insulation LLC', 'كينغسباين للعزل ذ.م.م'),
@@ -378,7 +378,7 @@ const ITEMS: CertItem[] = [
   },
   {
     id: 'henkel-applicator',
-    group: 'manufacturers',
+    group: 'material',
     title: bi('Henkel Polybit approved applicator', 'مطبّق معتمد من هنكل بوليبت'),
     kind: bi('Bitumen, cementitious and polyurethane waterproofing', 'العزل المائي بالبيتومين والمواد الإسمنتية والبولي يوريثان'),
     issuer: bi('Henkel Polybit Industries Ltd.', 'هنكل بوليبت للصناعات المحدودة'),
@@ -394,7 +394,7 @@ const ITEMS: CertItem[] = [
   },
   {
     id: 'spfa-membership',
-    group: 'manufacturers',
+    group: 'material',
     title: bi('SPFA membership', 'عضوية SPFA'),
     kind: bi('Spray Polyurethane Foam Alliance', 'تحالف رغوة البولي يوريثان المرشوشة'),
     issuer: bi('Spray Polyurethane Foam Alliance (SPFA)', 'تحالف رغوة البولي يوريثان المرشوشة (SPFA)'),
@@ -410,7 +410,7 @@ const ITEMS: CertItem[] = [
   },
   {
     id: 'techno-rubber',
-    group: 'manufacturers',
+    group: 'material',
     title: bi('Techno Rubber confirmation letter', 'خطاب تأكيد من تكنو رابر'),
     kind: bi('EPDM application, Jafurah Aramco', 'تركيب EPDM، الجافورة أرامكو'),
     issuer: bi('Techno Rubber Company Ltd.', 'شركة المطاط الفني المحدودة'),
@@ -425,7 +425,7 @@ const ITEMS: CertItem[] = [
   },
   {
     id: 'sumou-approval',
-    group: 'letters',
+    group: 'material',
     title: bi('Dar Sumou waterproofing approval', 'اعتماد العزل المائي، دار سمو'),
     kind: bi('Pre-qualification submittal, Jeddah', 'طلب تأهيل مسبق، جدة'),
     issuer: bi('Project consultant, Dar Sumou', 'استشاري مشروع دار سمو'),
@@ -442,7 +442,7 @@ const ITEMS: CertItem[] = [
   },
   {
     id: 'sinohydro-hse',
-    group: 'letters',
+    group: 'completion',
     title: bi('Sinohydro HSE performance certificate', 'شهادة أداء الصحة والسلامة، سينوهيدرو'),
     kind: bi('Development Housing Project, Jazan', 'مشروع الإسكان التنموي، جازان'),
     issuer: bi('Sinohydro Corporation, HSE department', 'سينوهيدرو، قسم الصحة والسلامة والبيئة'),
@@ -487,21 +487,25 @@ const ITEMS: CertItem[] = [
 ];
 
 const PAPER_ORDER = [
-  'iso-9001', 'iso-14001', 'iso-45001',
-  'classification', 'local-content', 'monshaat', 'sca-membership',
-  'aramco-approval', 'aramco-fmar',
-  'mapei-applicator', 'fosroc-applicator', 'kingspan-applicator', 'henkel-applicator', 'spfa-membership', 'techno-rubber',
-  'khyber', 'kaab', 'bedaa', 'fbc', 'ejad', 'jeddah-first', 'sumou-approval', 'sinohydro-hse',
+  /* 1. government approvals (profile pages 25-26) */
+  'classification', 'monshaat', 'local-content', 'sca-membership',
+  /* 2. ISO (profile page 25) */
+  'iso-14001', 'iso-9001', 'iso-45001',
+  /* 3. completion certificates (profile pages 29-30) */
+  'bedaa', 'ejad', 'fbc', 'kaab', 'khyber', 'jeddah-first', 'sinohydro-hse',
+  /* 4. material approvals (profile pages 24 and 31-32) */
+  'kingspan-applicator', 'fosroc-applicator', 'techno-rubber', 'mapei-applicator', 'henkel-applicator', 'spfa-membership',
+  'aramco-approval', 'aramco-fmar', 'sumou-approval',
+  /* company profile */
   'projects-completed', 'org-equipment',
 ];
 ITEMS.sort((a, b) => PAPER_ORDER.indexOf(a.id) - PAPER_ORDER.indexOf(b.id));
 
 const GROUPS: { id: GroupId; title: L10n; tab: L10n }[] = [
+  { id: 'government', title: bi('Government approval certificates', 'شهادات الاعتماد الحكومية'), tab: bi('Government approvals', 'الاعتمادات الحكومية') },
   { id: 'standards', title: bi('ISO certifications', 'شهادات الآيزو'), tab: bi('ISO', 'الآيزو') },
-  { id: 'government', title: bi('Government and authority registrations', 'التسجيلات والاعتمادات الحكومية'), tab: bi('Government', 'الجهات الحكومية') },
-  { id: 'aramco', title: bi('Saudi Aramco', 'أرامكو السعودية'), tab: bi('Saudi Aramco', 'أرامكو') },
-  { id: 'manufacturers', title: bi('Manufacturer approvals and memberships', 'اعتمادات المصنّعين والعضويات'), tab: bi('Manufacturers', 'المصنّعون') },
-  { id: 'letters', title: bi('Client completion, approval and performance letters', 'شهادات الإنجاز والاعتماد والأداء من العملاء'), tab: bi('Client letters', 'خطابات العملاء') },
+  { id: 'completion', title: bi('Completion certificates', 'شهادات الإنجاز'), tab: bi('Completion', 'شهادات الإنجاز') },
+  { id: 'material', title: bi('Material approval certificates', 'شهادات اعتماد المواد'), tab: bi('Material approvals', 'اعتماد المواد') },
   { id: 'profile', title: bi('Company profile', 'ملف الشركة'), tab: bi('Company profile', 'ملف الشركة') },
 ];
 
