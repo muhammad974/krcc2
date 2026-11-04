@@ -12,8 +12,8 @@ import {
 import './certificates.css';
 
 type Lang = 'en' | 'ar';
-type GroupId = 'government' | 'standards' | 'completion' | 'material' | 'profile';
-type FilterId = 'all' | GroupId;
+type GroupId = 'standards' | 'government' | 'completion' | 'material' | 'project';
+type FilterId = GroupId;
 
 interface L10n {
   en: string;
@@ -425,7 +425,7 @@ const ITEMS: CertItem[] = [
   },
   {
     id: 'sumou-approval',
-    group: 'material',
+    group: 'project',
     title: bi('Dar Sumou waterproofing approval', 'اعتماد العزل المائي، دار سمو'),
     kind: bi('Pre-qualification submittal, Jeddah', 'طلب تأهيل مسبق، جدة'),
     issuer: bi('Project consultant, Dar Sumou', 'استشاري مشروع دار سمو'),
@@ -457,56 +457,29 @@ const ITEMS: CertItem[] = [
       { label: bi('Recognition', 'سبب التقدير'), value: bi('Outstanding performance in health, safety and environment', 'أداء متميز في الصحة والسلامة والبيئة') },
     ],
   },
-  {
-    id: 'projects-completed',
-    group: 'profile',
-    title: bi('Projects completed', 'المشاريع المنجزة'),
-    kind: bi('Register of 72 completed projects', 'سجل 72 مشروعا منجزا'),
-    issuer: bi('Khabeer Al Raida Contracting Co.', 'شركة خبير الرائدة للمقاولات'),
-    thumb: `${BASE}/projects-completed-thumb.jpg`,
-    pages: [1, 2].map((n) => `${BASE}/projects-completed-${n}.jpg`),
-    file: `${BASE}/projects-completed.pdf`,
-    facts: [
-      { label: bi('Projects listed', 'عدد المشاريع'), value: bi('72', '72') },
-      { label: bi('Work covered', 'الأعمال'), value: bi('Waterproofing, lining, flooring, asphalt, finishing and electrical works', 'العزل المائي والتبطين والأرضيات والأسفلت والتشطيبات والأعمال الكهربائية') },
-    ],
-  },
-  {
-    id: 'org-equipment',
-    group: 'profile',
-    title: bi('Organization and equipment', 'الهيكل التنظيمي والمعدات'),
-    kind: bi('Organizational chart and equipment list', 'الهيكل التنظيمي وقائمة المعدات'),
-    issuer: bi('Khabeer Al Raida Contracting Co.', 'شركة خبير الرائدة للمقاولات'),
-    thumb: `${BASE}/org-equipment-thumb.jpg`,
-    pages: [1, 2].map((n) => `${BASE}/org-equipment-${n}.jpg`),
-    file: `${BASE}/org-equipment.pdf`,
-    facts: [
-      { label: bi('Pages', 'الصفحات'), value: bi('Organizational chart, equipment list', 'الهيكل التنظيمي، قائمة المعدات') },
-    ],
-  },
 ];
 
 const PAPER_ORDER = [
-  /* 1. government approvals (profile pages 25-26) */
-  'classification', 'monshaat', 'local-content', 'sca-membership',
-  /* 2. ISO (profile page 25) */
+  /* 1. ISO certificates */
   'iso-14001', 'iso-9001', 'iso-45001',
-  /* 3. completion certificates (profile pages 29-30) */
+  /* 2. government approval certificates */
+  'classification', 'monshaat', 'local-content', 'sca-membership',
+  /* 3. completion certificates */
   'bedaa', 'ejad', 'fbc', 'kaab', 'khyber', 'jeddah-first', 'sinohydro-hse',
-  /* 4. material approvals (profile pages 24 and 31-32) */
+  /* 4. material approval certificates */
   'kingspan-applicator', 'fosroc-applicator', 'techno-rubber', 'mapei-applicator', 'henkel-applicator', 'spfa-membership',
-  'aramco-approval', 'aramco-fmar', 'sumou-approval',
-  /* company profile */
-  'projects-completed', 'org-equipment',
+  'aramco-approval', 'aramco-fmar',
+  /* 5. project approval / pre-qualification */
+  'sumou-approval',
 ];
 ITEMS.sort((a, b) => PAPER_ORDER.indexOf(a.id) - PAPER_ORDER.indexOf(b.id));
 
 const GROUPS: { id: GroupId; title: L10n; tab: L10n }[] = [
-  { id: 'government', title: bi('Government approval certificates', 'شهادات الاعتماد الحكومية'), tab: bi('Government approvals', 'الاعتمادات الحكومية') },
   { id: 'standards', title: bi('ISO certifications', 'شهادات الآيزو'), tab: bi('ISO', 'الآيزو') },
+  { id: 'government', title: bi('Government approval certificates', 'شهادات الاعتماد الحكومية'), tab: bi('Government approvals', 'الاعتمادات الحكومية') },
   { id: 'completion', title: bi('Completion certificates', 'شهادات الإنجاز'), tab: bi('Completion', 'شهادات الإنجاز') },
   { id: 'material', title: bi('Material approval certificates', 'شهادات اعتماد المواد'), tab: bi('Material approvals', 'اعتماد المواد') },
-  { id: 'profile', title: bi('Company profile', 'ملف الشركة'), tab: bi('Company profile', 'ملف الشركة') },
+  { id: 'project', title: bi('Project approval and pre-qualification', 'اعتماد المشاريع والتأهيل المسبق'), tab: bi('Project approval', 'اعتماد المشاريع') },
 ];
 
 const REGISTRATIONS = [
@@ -813,23 +786,24 @@ const Viewer: React.FC<{
 export const CertificationsSection: React.FC = () => {
   const { t, language } = useLanguage();
   const lang: Lang = language === 'ar' ? 'ar' : 'en';
-  const [filter, setFilter] = useState<FilterId>('all');
+  const [filter, setFilter] = useState<FilterId>('standards');
   const [openId, setOpenId] = useState<string | null>(null);
   const openerRef = useRef<HTMLElement | null>(null);
   const spotRef = useRef<HTMLDivElement>(null);
   const [statsRef, statsSeen] = useInView<HTMLDivElement>(0.4);
   const [boardRef, boardSeen] = useInView<HTMLDivElement>(0.08);
 
-  const visibleGroups = GROUPS.filter((g) => filter === 'all' || g.id === filter).map((g) => ({
+  const visibleGroups = GROUPS.filter((g) => g.id === filter).map((g) => ({
     ...g,
     items: ITEMS.filter((i) => i.group === g.id),
   }));
   const flat = visibleGroups.flatMap((g) => g.items);
 
-  const tabs: { id: FilterId; label: string; count: number }[] = [
-    { id: 'all', label: lang === 'ar' ? 'الكل' : 'All documents', count: ITEMS.length },
-    ...GROUPS.map((g) => ({ id: g.id as FilterId, label: g.tab[lang], count: ITEMS.filter((i) => i.group === g.id).length })),
-  ];
+  const tabs: { id: FilterId; label: string; count: number }[] = GROUPS.map((g) => ({
+    id: g.id,
+    label: g.tab[lang],
+    count: ITEMS.filter((i) => i.group === g.id).length,
+  }));
 
   const open = useCallback((id: string, opener: HTMLElement) => {
     openerRef.current = opener;
