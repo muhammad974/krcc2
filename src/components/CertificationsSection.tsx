@@ -110,22 +110,6 @@ const ITEMS: CertItem[] = [
 
   /* approvals and registrations */
   {
-    id: 'aramco-approval',
-    group: 'material',
-    title: bi('Saudi Aramco registration', 'تسجيل أرامكو السعودية'),
-    kind: bi('Registration approval letter', 'خطاب اعتماد التسجيل'),
-    issuer: bi('Saudi Aramco, Supplier Registration Unit', 'أرامكو السعودية، وحدة تسجيل الموردين'),
-    issued: '2023-04-17',
-    thumb: `${BASE}/aramco-approval-thumb.jpg`,
-    pages: [`${BASE}/aramco-approval.jpg`],
-    file: `${BASE}/aramco-approval.pdf`,
-    facts: [
-      { label: bi('Vendor code', 'رمز المورد'), value: bi('10110264') },
-      { label: bi('E-reference no.', 'الرقم المرجعي'), value: bi('0006405') },
-      { label: bi('Supplier type', 'نوع المورد'), value: bi('Service provider only', 'مزوّد خدمات فقط') },
-    ],
-  },
-  {
     id: 'classification',
     group: 'government',
     title: bi('Municipal services classification', 'تصنيف مقدمي خدمات المدن'),
@@ -311,40 +295,6 @@ const ITEMS: CertItem[] = [
     ],
   },
   {
-    id: 'aramco-fmar',
-    group: 'material',
-    title: bi('Aramco material approval (FMAR)', 'اعتماد مواد أرامكو (FMAR)'),
-    kind: bi('Waterproofing PVC membrane, Jafurah', 'غشاء PVC للعزل المائي، الجافورة'),
-    issuer: bi('Saudi Aramco, document transmittal and field material approval request', 'أرامكو السعودية، مراسلة المستندات وطلب اعتماد المواد'),
-    issued: '2024-08-20',
-    thumb: `${BASE}/aramco-fmar-thumb.jpg`,
-    pages: [1, 2].map((n) => `${BASE}/aramco-fmar-${n}.jpg`),
-    file: `${BASE}/aramco-fmar.pdf`,
-    facts: [
-      { label: bi('Document no.', 'رقم المستند'), value: bi('JUS&ICS-AR-FMAR-0066 (Rev. A1)', 'JUS&ICS-AR-FMAR-0066 (Rev. A1)') },
-      { label: bi('Project', 'المشروع'), value: bi('Jafurah Utilities, Sulfur and Interconnecting Systems, Package 3', 'مشروع الجافورة للمرافق والكبريت والأنظمة المترابطة، الحزمة 3') },
-      { label: bi('Material', 'المادة'), value: bi('Waterproofing PVC membrane', 'غشاء PVC للعزل المائي') },
-      { label: bi('Review result', 'نتيجة المراجعة'), value: bi('Reviewed with comments: membrane technically approved, guarantee certificate required', 'روجعت مع ملاحظات: الغشاء معتمد فنيا ويلزم تقديم شهادة ضمان') },
-      { label: bi('Vendor code', 'رمز المورد'), value: bi('10110264', '10110264') },
-    ],
-  },
-  {
-    id: 'mapei-applicator',
-    group: 'material',
-    title: bi('Mapei approved applicator', 'مطبّق معتمد من مابي'),
-    kind: bi('Mapefloor flooring systems', 'أنظمة أرضيات Mapefloor'),
-    issuer: bi('Mapei Saudia (Sole Shareholder L.L.C.)', 'مابي السعودية (شركة شخص واحد ذ.م.م)'),
-    issued: '2023-09-16',
-    expires: '2027-06-28',
-    thumb: `${BASE}/mapei-applicator-thumb.jpg`,
-    pages: [`${BASE}/mapei-applicator.jpg`],
-    file: `${BASE}/mapei-applicator.pdf`,
-    facts: [
-      { label: bi('Document no.', 'رقم المستند'), value: bi('TSD/AAC/KRCC/0126-023', 'TSD/AAC/KRCC/0126-023') },
-      { label: bi('Products', 'المنتجات'), value: bi('Mapefloor CPU+/MF, CPU+/RT, FC 200 ME, I 300 SL ME', 'Mapefloor CPU+/MF, CPU+/RT, FC 200 ME, I 300 SL ME') },
-    ],
-  },
-  {
     id: 'fosroc-applicator',
     group: 'material',
     title: bi('Fosroc approved applicator', 'مطبّق معتمد من فوسروك'),
@@ -374,38 +324,6 @@ const ITEMS: CertItem[] = [
       { label: bi('Reference', 'المرجع'), value: bi('DdP/2024051', 'DdP/2024051') },
       { label: bi('Product', 'المنتج'), value: bi('Kingspan Therma TR27', 'Kingspan Therma TR27') },
       { label: bi('Support', 'الدعم'), value: bi('Periodic site visits and observations during projects', 'زيارات ومعاينات دورية للموقع خلال المشاريع') },
-    ],
-  },
-  {
-    id: 'henkel-applicator',
-    group: 'material',
-    title: bi('Henkel Polybit approved applicator', 'مطبّق معتمد من هنكل بوليبت'),
-    kind: bi('Bitumen, cementitious and polyurethane waterproofing', 'العزل المائي بالبيتومين والمواد الإسمنتية والبولي يوريثان'),
-    issuer: bi('Henkel Polybit Industries Ltd.', 'هنكل بوليبت للصناعات المحدودة'),
-    issued: '2026-04-04',
-    expires: '2027-04-04',
-    thumb: `${BASE}/henkel-applicator-thumb.jpg`,
-    pages: [`${BASE}/henkel-applicator.jpg`],
-    file: `${BASE}/henkel-applicator.pdf`,
-    facts: [
-      { label: bi('Reference', 'المرجع'), value: bi('HPIL/KRCC/1782/2354/13', 'HPIL/KRCC/1782/2354/13') },
-      { label: bi('Validity', 'مدة الصلاحية'), value: bi('One year from the date of issue', 'سنة من تاريخ الإصدار') },
-    ],
-  },
-  {
-    id: 'spfa-membership',
-    group: 'material',
-    title: bi('SPFA membership', 'عضوية SPFA'),
-    kind: bi('Spray Polyurethane Foam Alliance', 'تحالف رغوة البولي يوريثان المرشوشة'),
-    issuer: bi('Spray Polyurethane Foam Alliance (SPFA)', 'تحالف رغوة البولي يوريثان المرشوشة (SPFA)'),
-    expires: '2027-07-24',
-    thumb: `${BASE}/spfa-membership-thumb.jpg`,
-    pages: [`${BASE}/spfa-membership.jpg`],
-    file: `${BASE}/spfa-membership.pdf`,
-    wide: true,
-    ratio: 1.25,
-    facts: [
-      { label: bi('Member no.', 'رقم العضوية'), value: bi('52104592', '52104592') },
     ],
   },
   {
@@ -440,23 +358,6 @@ const ITEMS: CertItem[] = [
       { label: bi('Result', 'النتيجة'), value: bi('Approved as noted, 25 Feb 2023', 'معتمد مع الملاحظات، 25 فبراير 2023') },
     ],
   },
-  {
-    id: 'sinohydro-hse',
-    group: 'completion',
-    title: bi('Sinohydro HSE performance certificate', 'شهادة أداء الصحة والسلامة، سينوهيدرو'),
-    kind: bi('Development Housing Project, Jazan', 'مشروع الإسكان التنموي، جازان'),
-    issuer: bi('Sinohydro Corporation, HSE department', 'سينوهيدرو، قسم الصحة والسلامة والبيئة'),
-    issued: '2022-08-24',
-    thumb: `${BASE}/sinohydro-hse-thumb.jpg`,
-    pages: [`${BASE}/sinohydro-hse.jpg`],
-    file: `${BASE}/sinohydro-hse.pdf`,
-    wide: true,
-    ratio: 1.169,
-    facts: [
-      { label: bi('Project', 'المشروع'), value: bi('Development Housing Project for Jazan, KSA', 'مشروع الإسكان التنموي بجازان') },
-      { label: bi('Recognition', 'سبب التقدير'), value: bi('Outstanding performance in health, safety and environment', 'أداء متميز في الصحة والسلامة والبيئة') },
-    ],
-  },
 
   {
     id: 'insuwrap-applicator',
@@ -465,9 +366,9 @@ const ITEMS: CertItem[] = [
     kind: bi('PVC waterproofing membranes for roofing', 'أغشية PVC للعزل المائي للأسطح'),
     issuer: bi('Waterproofing & Wrapping Products Co., Ltd. (Insuwrap)', 'شركة منتجات العزل المائي والتغليف المحدودة (إنسيوراب)'),
     issued: '2024-08-26',
-    thumb: `${BASE}/insuwrap-thumb.jpg`,
-    pages: [`${BASE}/insuwrap.jpg`],
-    file: `${BASE}/insuwrap.pdf`,
+    thumb: `${BASE}/insuwrap-applicator-thumb.jpg`,
+    pages: [`${BASE}/insuwrap-applicator.jpg`],
+    file: `${BASE}/insuwrap-applicator.pdf`,
     facts: [
       { label: bi('Reference', 'المرجع'), value: bi('260824/08/24 LE', '260824/08/24 LE') },
       { label: bi('Product', 'المنتج'), value: bi('Insuwrap PVC waterproofing membranes, roofing system', 'أغشية Insuwrap PVC للعزل المائي، نظام الأسطح') },
@@ -492,41 +393,6 @@ const ITEMS: CertItem[] = [
       { label: bi('Completed', 'تاريخ الإنجاز'), value: bi('2 Sep 2026', '2 سبتمبر 2026') },
     ],
   },
-  {
-    id: 'aramco-fmar-0045',
-    group: 'material',
-    title: bi('Aramco material approval (FMAR-0045)', 'اعتماد مواد أرامكو (FMAR-0045)'),
-    kind: bi('Roof waterproofing materials, Jafurah', 'مواد عزل الأسطح، الجافورة'),
-    issuer: bi('Saudi Aramco, document transmittal and field material approval requests', 'أرامكو السعودية، مراسلة المستندات وطلبات اعتماد المواد'),
-    issued: '2023-12-27',
-    thumb: `${BASE}/aramco-fmar-0045-thumb.jpg`,
-    pages: [1, 2, 3].map((n) => `${BASE}/aramco-fmar-0045-${n}.jpg`),
-    file: `${BASE}/aramco-fmar-0045.pdf`,
-    facts: [
-      { label: bi('Document no.', 'رقم المستند'), value: bi('JUS&ICS-AR-FMAR-0045 (Rev. A1)', 'JUS&ICS-AR-FMAR-0045 (Rev. A1)') },
-      { label: bi('Project', 'المشروع'), value: bi('Jafurah Utilities, Sulfur and Interconnecting Systems, Package 3', 'مشروع الجافورة للمرافق والكبريت والأنظمة المترابطة، الحزمة 3') },
-      { label: bi('Material', 'المادة'), value: bi('Roof waterproofing materials: insulation, adhesives, screed admixture, flashing', 'مواد عزل الأسطح: العزل الحراري واللواصق وإضافات المونة والفلاشينج') },
-      { label: bi('Review result', 'نتيجة المراجعة'), value: bi('Reviewed, 25 Jan 2024', 'تمت المراجعة، 25 يناير 2024') },
-      { label: bi('Vendor code', 'رمز المورد'), value: bi('10110264', '10110264') },
-    ],
-  },
-  {
-    id: 'sedra-prequal',
-    group: 'project',
-    title: bi('SEDRA waterproofing pre-qualification', 'التأهيل المسبق للعزل المائي، سدرة'),
-    kind: bi('CNT prequalification, SEDRA Phase 4', 'تأهيل CNT، سدرة المرحلة 4'),
-    issuer: bi('Roshn Group, SEDRA (East Consulting Engineering Center)', 'مجموعة روشن، سدرة (مركز الشرق للاستشارات الهندسية)'),
-    issued: '2025-09-06',
-    thumb: `${BASE}/cnt-prequal-sedra-thumb.jpg`,
-    pages: [`${BASE}/cnt-prequal-sedra.jpg`],
-    file: `${BASE}/cnt-prequal-sedra.pdf`,
-    facts: [
-      { label: bi('Reference', 'المرجع'), value: bi('00104-CU-0015S-POL-ARC-00002', '00104-CU-0015S-POL-ARC-00002') },
-      { label: bi('Project phase', 'مرحلة المشروع'), value: bi('00104-SEDRA-4', '00104-SEDRA-4') },
-      { label: bi('Submitted by', 'مقدم من'), value: bi('Branch of China Harbour Engineering Company Ltd', 'فرع شركة الصين هاربر للهندسة المحدودة') },
-      { label: bi('Status', 'الحالة'), value: bi('Submitted, 6 Sep 2025', 'مقدّم، 6 سبتمبر 2025') },
-    ],
-  },
 ];
 
 const PAPER_ORDER = [
@@ -534,13 +400,12 @@ const PAPER_ORDER = [
   'classification', 'monshaat', 'local-content', 'sca-membership',
   /* 2. ISO certificates */
   'iso-14001', 'iso-9001', 'iso-45001',
-  /* 3. completion certificates */
-  'bedaa', 'ejad', 'fbc', 'nbtc-krcc', 'kaab', 'khyber', 'jeddah-first', 'sinohydro-hse',
-  /* 4. material approval certificates */
-  'insuwrap-applicator', 'kingspan-applicator', 'fosroc-applicator', 'techno-rubber', 'mapei-applicator', 'henkel-applicator', 'spfa-membership',
-  'aramco-approval', 'aramco-fmar-0045', 'aramco-fmar',
-  /* 5. project approval / pre-qualification */
-  'sumou-approval', 'sedra-prequal',
+  /* 3. completion certificates (7) */
+  'bedaa', 'ejad', 'fbc', 'nbtc-krcc', 'kaab', 'khyber', 'jeddah-first',
+  /* 4. material approval certificates (4) */
+  'insuwrap-applicator', 'kingspan-applicator', 'fosroc-applicator', 'techno-rubber',
+  /* 5. project approval / pre-qualification (1) */
+  'sumou-approval',
 ];
 ITEMS.sort((a, b) => PAPER_ORDER.indexOf(a.id) - PAPER_ORDER.indexOf(b.id));
 
