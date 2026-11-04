@@ -1,8 +1,0 @@
-{
-  "name": "Khabeer Al Raida Contracting Company (KRCC)",
-  "description": "Official bilingual corporate website for Khabeer Al Raida Contracting Company (KRCC), Saudi Arabia's specialist in waterproofing systems, thermal insulation, epoxy flooring, lining solutions, and construction material supply.",
-  "requestFramePermissions": [],
-  "majorCapabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
-}
