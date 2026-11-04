@@ -12,7 +12,7 @@ import {
 import './certificates.css';
 
 type Lang = 'en' | 'ar';
-type GroupId = 'standards' | 'government' | 'completion' | 'material' | 'project';
+type GroupId = 'standards' | 'government' | 'completion' | 'material' | 'prequal';
 type FilterId = GroupId;
 
 interface L10n {
@@ -109,6 +109,22 @@ const ITEMS: CertItem[] = [
   },
 
   /* approvals and registrations */
+  {
+    id: 'aramco-approval',
+    group: 'prequal',
+    title: bi('Saudi Aramco registration', 'تسجيل أرامكو السعودية'),
+    kind: bi('Registration approval letter', 'خطاب اعتماد التسجيل'),
+    issuer: bi('Saudi Aramco, Supplier Registration Unit', 'أرامكو السعودية، وحدة تسجيل الموردين'),
+    issued: '2023-04-17',
+    thumb: `${BASE}/aramco-approval-thumb.jpg`,
+    pages: [`${BASE}/aramco-approval.jpg`],
+    file: `${BASE}/aramco-approval.pdf`,
+    facts: [
+      { label: bi('Vendor code', 'رمز المورد'), value: bi('10110264') },
+      { label: bi('E-reference no.', 'الرقم المرجعي'), value: bi('0006405') },
+      { label: bi('Supplier type', 'نوع المورد'), value: bi('Service provider only', 'مزوّد خدمات فقط') },
+    ],
+  },
   {
     id: 'classification',
     group: 'government',
@@ -295,6 +311,75 @@ const ITEMS: CertItem[] = [
     ],
   },
   {
+    id: 'aramco-fmar',
+    group: 'prequal',
+    title: bi('Aramco material approval (FMAR), PVC membrane', 'اعتماد مواد أرامكو (FMAR)، غشاء PVC'),
+    kind: bi('Waterproofing PVC membrane, Jafurah', 'غشاء PVC للعزل المائي، الجافورة'),
+    issuer: bi('Saudi Aramco, document transmittal and field material approval request', 'أرامكو السعودية، مراسلة المستندات وطلب اعتماد المواد'),
+    issued: '2024-08-20',
+    thumb: `${BASE}/aramco-fmar-thumb.jpg`,
+    pages: [1, 2].map((n) => `${BASE}/aramco-fmar-${n}.jpg`),
+    file: `${BASE}/aramco-fmar.pdf`,
+    facts: [
+      { label: bi('Document no.', 'رقم المستند'), value: bi('JUS&ICS-AR-FMAR-0066 (Rev. A1)', 'JUS&ICS-AR-FMAR-0066 (Rev. A1)') },
+      { label: bi('Project', 'المشروع'), value: bi('Jafurah Utilities, Sulfur and Interconnecting Systems, Package 3', 'مشروع الجافورة للمرافق والكبريت والأنظمة المترابطة، الحزمة 3') },
+      { label: bi('Material', 'المادة'), value: bi('Waterproofing PVC membrane', 'غشاء PVC للعزل المائي') },
+      { label: bi('Review result', 'نتيجة المراجعة'), value: bi('Reviewed with comments: membrane technically approved, guarantee certificate required', 'روجعت مع ملاحظات: الغشاء معتمد فنيا ويلزم تقديم شهادة ضمان') },
+      { label: bi('Vendor code', 'رمز المورد'), value: bi('10110264', '10110264') },
+    ],
+  },
+  {
+    id: 'fmar-jan-2024',
+    group: 'prequal',
+    title: bi('Aramco material approval (FMAR), roof materials', 'اعتماد مواد أرامكو (FMAR)، مواد الأسقف'),
+    kind: bi('Roof waterproofing and insulation materials, Jafurah', 'مواد العزل المائي والحراري للأسقف، الجافورة'),
+    issuer: bi('Saudi Aramco, document transmittal and field material approval request', 'أرامكو السعودية، إحالة مستندات وطلب اعتماد مواد'),
+    issued: '2024-01-25',
+    thumb: `${BASE}/fmar-jan-2024-thumb.jpg`,
+    pages: [1, 2].map((n) => `${BASE}/fmar-jan-2024-${n}.jpg`),
+    file: `${BASE}/fmar-jan-2024.pdf`,
+    facts: [
+      { label: bi('Document no.', 'رقم المستند'), value: bi('JUS&ICS-AR-FMAR-0045 (Rev. A1)', 'JUS&ICS-AR-FMAR-0045 (Rev. A1)') },
+      { label: bi('Project', 'المشروع'), value: bi('Jafurah Utilities, Sulfur and Interconnecting Systems, Package 3', 'مرافق الجافورة والكبريت وأنظمة الربط، الحزمة 3') },
+      { label: bi('Materials', 'المواد'), value: bi('Rigid insulation, insulation and bonding adhesives, lightweight screed admixture, aluminium flashing', 'عزل حراري صلب، لواصق العزل والتثبيت، إضافات المونة الخفيفة، فلاشينج ألمنيوم') },
+      { label: bi('Review result', 'نتيجة المراجعة'), value: bi('Reviewed with no comment, 25 Jan 2024', 'تمت المراجعة دون ملاحظات، 25 يناير 2024') },
+      { label: bi('Vendor code', 'رقم المورد'), value: bi('10110264', '10110264') },
+    ],
+  },
+  {
+    id: 'sedra-prequal',
+    group: 'prequal',
+    title: bi('Sedra 4 pre-qualification', 'التأهيل المسبق، مشروع سدرة 4'),
+    kind: bi('Waterproofing, all systems subcontractor, Phase 4', 'مقاول باطن العزل المائي لجميع الأنظمة، المرحلة 4'),
+    issuer: bi('East Consulting Engineering Center (ECEC), for China Harbour Engineering', 'مركز الشرق للاستشارات الهندسية (ECEC)، لصالح China Harbour Engineering'),
+    issued: '2026-09-08',
+    thumb: `${BASE}/sedra-prequal-thumb.jpg`,
+    pages: [1, 2].map((n) => `${BASE}/sedra-prequal-${n}.jpg`),
+    file: `${BASE}/sedra-prequal.pdf`,
+    facts: [
+      { label: bi('Reference', 'المرجع'), value: bi('00104-CHE-003199-PQL-ARC-000062', '00104-CHE-003199-PQL-ARC-000062') },
+      { label: bi('Project', 'المشروع'), value: bi('Sedra 4 (Roshn), infrastructure and vertical works', 'سدرة 4 (روشن)، أعمال البنية التحتية والأعمال الرأسية') },
+      { label: bi('Main contractor', 'المقاول الرئيسي'), value: bi('Branch of China Harbour Engineering Company Ltd', 'فرع شركة China Harbour Engineering') },
+      { label: bi('Result', 'النتيجة'), value: bi('Approved as noted (Code B), 8 Sep 2026', 'معتمد مع ملاحظات (Code B)، 8 سبتمبر 2026') },
+    ],
+  },
+  {
+    id: 'mapei-applicator',
+    group: 'material',
+    title: bi('Mapei approved applicator', 'مطبّق معتمد من مابي'),
+    kind: bi('Mapefloor flooring systems', 'أنظمة أرضيات Mapefloor'),
+    issuer: bi('Mapei Saudia (Sole Shareholder L.L.C.)', 'مابي السعودية (شركة شخص واحد ذ.م.م)'),
+    issued: '2023-09-16',
+    expires: '2027-06-28',
+    thumb: `${BASE}/mapei-applicator-thumb.jpg`,
+    pages: [`${BASE}/mapei-applicator.jpg`],
+    file: `${BASE}/mapei-applicator.pdf`,
+    facts: [
+      { label: bi('Document no.', 'رقم المستند'), value: bi('TSD/AAC/KRCC/0126-023', 'TSD/AAC/KRCC/0126-023') },
+      { label: bi('Products', 'المنتجات'), value: bi('Mapefloor CPU+/MF, CPU+/RT, FC 200 ME, I 300 SL ME', 'Mapefloor CPU+/MF, CPU+/RT, FC 200 ME, I 300 SL ME') },
+    ],
+  },
+  {
     id: 'fosroc-applicator',
     group: 'material',
     title: bi('Fosroc approved applicator', 'مطبّق معتمد من فوسروك'),
@@ -327,6 +412,38 @@ const ITEMS: CertItem[] = [
     ],
   },
   {
+    id: 'henkel-applicator',
+    group: 'material',
+    title: bi('Henkel Polybit approved applicator', 'مطبّق معتمد من هنكل بوليبت'),
+    kind: bi('Bitumen, cementitious and polyurethane waterproofing', 'العزل المائي بالبيتومين والمواد الإسمنتية والبولي يوريثان'),
+    issuer: bi('Henkel Polybit Industries Ltd.', 'هنكل بوليبت للصناعات المحدودة'),
+    issued: '2026-04-04',
+    expires: '2027-04-04',
+    thumb: `${BASE}/henkel-applicator-thumb.jpg`,
+    pages: [`${BASE}/henkel-applicator.jpg`],
+    file: `${BASE}/henkel-applicator.pdf`,
+    facts: [
+      { label: bi('Reference', 'المرجع'), value: bi('HPIL/KRCC/1782/2354/13', 'HPIL/KRCC/1782/2354/13') },
+      { label: bi('Validity', 'مدة الصلاحية'), value: bi('One year from the date of issue', 'سنة من تاريخ الإصدار') },
+    ],
+  },
+  {
+    id: 'spfa-membership',
+    group: 'material',
+    title: bi('SPFA membership', 'عضوية SPFA'),
+    kind: bi('Spray Polyurethane Foam Alliance', 'تحالف رغوة البولي يوريثان المرشوشة'),
+    issuer: bi('Spray Polyurethane Foam Alliance (SPFA)', 'تحالف رغوة البولي يوريثان المرشوشة (SPFA)'),
+    expires: '2027-07-24',
+    thumb: `${BASE}/spfa-membership-thumb.jpg`,
+    pages: [`${BASE}/spfa-membership.jpg`],
+    file: `${BASE}/spfa-membership.pdf`,
+    wide: true,
+    ratio: 1.25,
+    facts: [
+      { label: bi('Member no.', 'رقم العضوية'), value: bi('52104592', '52104592') },
+    ],
+  },
+  {
     id: 'techno-rubber',
     group: 'material',
     title: bi('Techno Rubber confirmation letter', 'خطاب تأكيد من تكنو رابر'),
@@ -343,7 +460,7 @@ const ITEMS: CertItem[] = [
   },
   {
     id: 'sumou-approval',
-    group: 'project',
+    group: 'prequal',
     title: bi('Dar Sumou waterproofing approval', 'اعتماد العزل المائي، دار سمو'),
     kind: bi('Pre-qualification submittal, Jeddah', 'طلب تأهيل مسبق، جدة'),
     issuer: bi('Project consultant, Dar Sumou', 'استشاري مشروع دار سمو'),
@@ -358,63 +475,45 @@ const ITEMS: CertItem[] = [
       { label: bi('Result', 'النتيجة'), value: bi('Approved as noted, 25 Feb 2023', 'معتمد مع الملاحظات، 25 فبراير 2023') },
     ],
   },
-
   {
-    id: 'insuwrap-applicator',
-    group: 'material',
-    title: bi('Insuwrap approved applicator', 'مطبّق معتمد من إنسيوراب'),
-    kind: bi('PVC waterproofing membranes for roofing', 'أغشية PVC للعزل المائي للأسطح'),
-    issuer: bi('Waterproofing & Wrapping Products Co., Ltd. (Insuwrap)', 'شركة منتجات العزل المائي والتغليف المحدودة (إنسيوراب)'),
-    issued: '2024-08-26',
-    thumb: `${BASE}/insuwrap-applicator-thumb.jpg`,
-    pages: [`${BASE}/insuwrap-applicator.jpg`],
-    file: `${BASE}/insuwrap-applicator.pdf`,
-    facts: [
-      { label: bi('Reference', 'المرجع'), value: bi('260824/08/24 LE', '260824/08/24 LE') },
-      { label: bi('Product', 'المنتج'), value: bi('Insuwrap PVC waterproofing membranes, roofing system', 'أغشية Insuwrap PVC للعزل المائي، نظام الأسطح') },
-      { label: bi('Validity', 'مدة الصلاحية'), value: bi('Six months from the date of the letter', 'ستة أشهر من تاريخ الخطاب') },
-    ],
-  },
-  {
-    id: 'nbtc-krcc',
+    id: 'sinohydro-hse',
     group: 'completion',
-    title: bi('NBTC completion certificate', 'شهادة إنجاز NBTC'),
-    kind: bi('Roof waterproofing, Jafurah Gas Plant', 'عزل الأسطح، مصنع غاز الجافورة'),
-    issuer: bi('Branch of Naser Mohammed Al-Baddah & Partner for Contracting (NBTC)', 'فرع شركة ناصر محمد البداح وشريكه للمقاولات (NBTC)'),
-    issued: '2026-09-26',
-    thumb: `${BASE}/nbtc-krcc-thumb.jpg`,
-    pages: [`${BASE}/nbtc-krcc.jpg`],
-    file: `${BASE}/nbtc-krcc.pdf`,
+    title: bi('Sinohydro HSE performance certificate', 'شهادة أداء الصحة والسلامة، سينوهيدرو'),
+    kind: bi('Development Housing Project, Jazan', 'مشروع الإسكان التنموي، جازان'),
+    issuer: bi('Sinohydro Corporation, HSE department', 'سينوهيدرو، قسم الصحة والسلامة والبيئة'),
+    issued: '2022-08-24',
+    thumb: `${BASE}/sinohydro-hse-thumb.jpg`,
+    pages: [`${BASE}/sinohydro-hse.jpg`],
+    file: `${BASE}/sinohydro-hse.pdf`,
+    wide: true,
+    ratio: 1.169,
     facts: [
-      { label: bi('Reference', 'المرجع'), value: bi('NBTC-KSA/KRCC/WCC/2026/001', 'NBTC-KSA/KRCC/WCC/2026/001') },
-      { label: bi('Project', 'المشروع'), value: bi('Jafurah Gas Plant Expansion Project Phase-II, U&O pkg II (Saudi Aramco)', 'مشروع توسعة مصنع غاز الجافورة المرحلة الثانية، حزمة U&O رقم 2 (أرامكو السعودية)') },
-      { label: bi('Scope', 'نطاق العمل'), value: bi('Supply and installation of roof waterproofing and metal coping works', 'توريد وتركيب أعمال عزل الأسطح وكسوة الحواف المعدنية') },
-      { label: bi('Location', 'الموقع'), value: bi('GIS-02 230 KV Main Substation', 'محطة GIS-02 الرئيسية 230 ك.ف') },
-      { label: bi('Completed', 'تاريخ الإنجاز'), value: bi('2 Sep 2026', '2 سبتمبر 2026') },
+      { label: bi('Project', 'المشروع'), value: bi('Development Housing Project for Jazan, KSA', 'مشروع الإسكان التنموي بجازان') },
+      { label: bi('Recognition', 'سبب التقدير'), value: bi('Outstanding performance in health, safety and environment', 'أداء متميز في الصحة والسلامة والبيئة') },
     ],
   },
 ];
 
 const PAPER_ORDER = [
-  /* 1. government approval certificates */
-  'classification', 'monshaat', 'local-content', 'sca-membership',
-  /* 2. ISO certificates */
+  /* 1. ISO (profile page 25) */
   'iso-14001', 'iso-9001', 'iso-45001',
-  /* 3. completion certificates (7) */
-  'bedaa', 'ejad', 'fbc', 'nbtc-krcc', 'kaab', 'khyber', 'jeddah-first',
-  /* 4. material approval certificates (4) */
-  'insuwrap-applicator', 'kingspan-applicator', 'fosroc-applicator', 'techno-rubber',
-  /* 5. project approval / pre-qualification (1) */
-  'sumou-approval',
+  /* 2. government approvals (profile pages 25-26) */
+  'classification', 'monshaat', 'local-content', 'sca-membership',
+  /* 3. completion certificates (profile pages 29-30) */
+  'bedaa', 'ejad', 'fbc', 'kaab', 'khyber', 'jeddah-first', 'sinohydro-hse',
+  /* 4. material approvals (profile page 24) */
+  'kingspan-applicator', 'fosroc-applicator', 'techno-rubber', 'mapei-applicator', 'henkel-applicator', 'spfa-membership',
+  /* 5. project approval and pre-qualification (profile pages 31-32) */
+  'aramco-approval', 'fmar-jan-2024', 'aramco-fmar', 'sedra-prequal', 'sumou-approval',
 ];
 ITEMS.sort((a, b) => PAPER_ORDER.indexOf(a.id) - PAPER_ORDER.indexOf(b.id));
 
 const GROUPS: { id: GroupId; title: L10n; tab: L10n }[] = [
-  { id: 'government', title: bi('Government approval certificates', 'شهادات الاعتماد الحكومية'), tab: bi('Government approval certificates', 'شهادات الاعتماد الحكومية') },
-  { id: 'standards', title: bi('ISO certificates', 'شهادات الآيزو'), tab: bi('ISO certificates', 'شهادات الآيزو') },
+  { id: 'standards', title: bi('ISO certifications', 'شهادات الآيزو'), tab: bi('ISO certificates', 'شهادات الآيزو') },
+  { id: 'government', title: bi('Government approval certificates', 'شهادات الاعتماد الحكومية'), tab: bi('Government approvals', 'الاعتمادات الحكومية') },
   { id: 'completion', title: bi('Completion certificates', 'شهادات الإنجاز'), tab: bi('Completion certificates', 'شهادات الإنجاز') },
-  { id: 'material', title: bi('Material approval certificates', 'شهادات اعتماد المواد'), tab: bi('Material approval certificates', 'شهادات اعتماد المواد') },
-  { id: 'project', title: bi('Project approval pre-qualification', 'اعتماد المشاريع والتأهيل المسبق'), tab: bi('Project approval pre-qualification', 'اعتماد المشاريع والتأهيل المسبق') },
+  { id: 'material', title: bi('Material approval certificates', 'شهادات اعتماد المواد'), tab: bi('Material approvals', 'اعتماد المواد') },
+  { id: 'prequal', title: bi('Project approval and pre-qualification', 'اعتماد المشاريع والتأهيل المسبق'), tab: bi('Project approval & pre-qualification', 'اعتماد المشاريع والتأهيل المسبق') },
 ];
 
 const REGISTRATIONS = [
@@ -721,7 +820,7 @@ const Viewer: React.FC<{
 export const CertificationsSection: React.FC = () => {
   const { t, language } = useLanguage();
   const lang: Lang = language === 'ar' ? 'ar' : 'en';
-  const [filter, setFilter] = useState<FilterId>('government');
+  const [filter, setFilter] = useState<FilterId>('standards');
   const [openId, setOpenId] = useState<string | null>(null);
   const openerRef = useRef<HTMLElement | null>(null);
   const spotRef = useRef<HTMLDivElement>(null);
@@ -734,11 +833,9 @@ export const CertificationsSection: React.FC = () => {
   }));
   const flat = visibleGroups.flatMap((g) => g.items);
 
-  const tabs: { id: FilterId; label: string; count: number }[] = GROUPS.map((g) => ({
-    id: g.id,
-    label: g.tab[lang],
-    count: ITEMS.filter((i) => i.group === g.id).length,
-  }));
+  const tabs: { id: FilterId; label: string; count: number }[] = [
+    ...GROUPS.map((g) => ({ id: g.id as FilterId, label: g.tab[lang], count: ITEMS.filter((i) => i.group === g.id).length })),
+  ];
 
   const open = useCallback((id: string, opener: HTMLElement) => {
     openerRef.current = opener;
