@@ -12,7 +12,7 @@ import {
 import './certificates.css';
 
 type Lang = 'en' | 'ar';
-type GroupId = 'standards' | 'approvals' | 'letters';
+type GroupId = 'standards' | 'government' | 'aramco' | 'manufacturers' | 'letters' | 'profile';
 type FilterId = 'all' | GroupId;
 
 interface L10n {
@@ -29,8 +29,8 @@ interface CertItem {
   title: L10n;
   kind: L10n;
   issuer: L10n;
-  /** ISO dates (YYYY-MM-DD) exactly as printed on the document */
-  issued: string;
+  /** ISO dates (YYYY-MM-DD) exactly as printed on the document (leave out when the document has none) */
+  issued?: string;
   expires?: string;
   thumb: string;
   pages: string[];
@@ -111,7 +111,7 @@ const ITEMS: CertItem[] = [
   /* approvals and registrations */
   {
     id: 'aramco-approval',
-    group: 'approvals',
+    group: 'aramco',
     title: bi('Saudi Aramco registration', 'تسجيل أرامكو السعودية'),
     kind: bi('Registration approval letter', 'خطاب اعتماد التسجيل'),
     issuer: bi('Saudi Aramco, Supplier Registration Unit', 'أرامكو السعودية، وحدة تسجيل الموردين'),
@@ -127,7 +127,7 @@ const ITEMS: CertItem[] = [
   },
   {
     id: 'classification',
-    group: 'approvals',
+    group: 'government',
     title: bi('Municipal services classification', 'تصنيف مقدمي خدمات المدن'),
     kind: bi('Grade 3, construction and building', 'الدرجة الثالثة، التشييد والبناء'),
     issuer: bi('Ministry of Municipalities and Housing (Balady)', 'وزارة البلديات والإسكان (بلدي)'),
@@ -147,7 +147,7 @@ const ITEMS: CertItem[] = [
   },
   {
     id: 'sca-membership',
-    group: 'approvals',
+    group: 'government',
     title: bi('Saudi Contractors Authority', 'الهيئة السعودية للمقاولين'),
     kind: bi('Contractor membership certificate', 'شهادة عضوية مقاول'),
     issuer: bi('Saudi Contractors Authority', 'الهيئة السعودية للمقاولين'),
@@ -160,7 +160,7 @@ const ITEMS: CertItem[] = [
   },
   {
     id: 'monshaat',
-    group: 'approvals',
+    group: 'government',
     title: bi('Monsha’at SME certificate', 'شهادة منشآت'),
     kind: bi('Small and medium enterprise', 'منشأة صغيرة ومتوسطة'),
     issuer: bi(
@@ -291,19 +291,218 @@ const ITEMS: CertItem[] = [
       },
     ],
   },
+  {
+    id: 'local-content',
+    group: 'government',
+    title: bi('Local content certificate', 'شهادة المحتوى المحلي'),
+    kind: bi('Local content score 5.51%', 'نسبة المحتوى المحلي 5.51%'),
+    issuer: bi('Local Content and Government Procurement Authority (LCGPA)', 'هيئة المحتوى المحلي والمشتريات الحكومية'),
+    issued: '2026-06-02',
+    expires: '2026-07-31',
+    thumb: `${BASE}/local-content-thumb.jpg`,
+    pages: [`${BASE}/local-content.jpg`],
+    file: `${BASE}/local-content.pdf`,
+    wide: true,
+    ratio: 1.439,
+    facts: [
+      { label: bi('Certificate no.', 'رقم الشهادة'), value: bi('M 273717', 'M 273717') },
+      { label: bi('Local content score', 'نسبة المحتوى المحلي'), value: bi('5.51%', '5.51%') },
+      { label: bi('Financial year', 'السنة المالية'), value: bi('Year ended 31 Dec 2024', 'السنة المنتهية في 31 ديسمبر 2024') },
+    ],
+  },
+  {
+    id: 'aramco-fmar',
+    group: 'aramco',
+    title: bi('Aramco material approval (FMAR)', 'اعتماد مواد أرامكو (FMAR)'),
+    kind: bi('Waterproofing PVC membrane, Jafurah', 'غشاء PVC للعزل المائي، الجافورة'),
+    issuer: bi('Saudi Aramco, document transmittal and field material approval request', 'أرامكو السعودية، مراسلة المستندات وطلب اعتماد المواد'),
+    issued: '2024-08-20',
+    thumb: `${BASE}/aramco-fmar-thumb.jpg`,
+    pages: [1, 2].map((n) => `${BASE}/aramco-fmar-${n}.jpg`),
+    file: `${BASE}/aramco-fmar.pdf`,
+    facts: [
+      { label: bi('Document no.', 'رقم المستند'), value: bi('JUS&ICS-AR-FMAR-0066 (Rev. A1)', 'JUS&ICS-AR-FMAR-0066 (Rev. A1)') },
+      { label: bi('Project', 'المشروع'), value: bi('Jafurah Utilities, Sulfur and Interconnecting Systems, Package 3', 'مشروع الجافورة للمرافق والكبريت والأنظمة المترابطة، الحزمة 3') },
+      { label: bi('Material', 'المادة'), value: bi('Waterproofing PVC membrane', 'غشاء PVC للعزل المائي') },
+      { label: bi('Review result', 'نتيجة المراجعة'), value: bi('Reviewed with comments: membrane technically approved, guarantee certificate required', 'روجعت مع ملاحظات: الغشاء معتمد فنيا ويلزم تقديم شهادة ضمان') },
+      { label: bi('Vendor code', 'رمز المورد'), value: bi('10110264', '10110264') },
+    ],
+  },
+  {
+    id: 'mapei-applicator',
+    group: 'manufacturers',
+    title: bi('Mapei approved applicator', 'مطبّق معتمد من مابي'),
+    kind: bi('Mapefloor flooring systems', 'أنظمة أرضيات Mapefloor'),
+    issuer: bi('Mapei Saudia (Sole Shareholder L.L.C.)', 'مابي السعودية (شركة شخص واحد ذ.م.م)'),
+    issued: '2023-09-16',
+    expires: '2027-06-28',
+    thumb: `${BASE}/mapei-applicator-thumb.jpg`,
+    pages: [`${BASE}/mapei-applicator.jpg`],
+    file: `${BASE}/mapei-applicator.pdf`,
+    facts: [
+      { label: bi('Document no.', 'رقم المستند'), value: bi('TSD/AAC/KRCC/0126-023', 'TSD/AAC/KRCC/0126-023') },
+      { label: bi('Products', 'المنتجات'), value: bi('Mapefloor CPU+/MF, CPU+/RT, FC 200 ME, I 300 SL ME', 'Mapefloor CPU+/MF, CPU+/RT, FC 200 ME, I 300 SL ME') },
+    ],
+  },
+  {
+    id: 'fosroc-applicator',
+    group: 'manufacturers',
+    title: bi('Fosroc approved applicator', 'مطبّق معتمد من فوسروك'),
+    kind: bi('Waterproofing, epoxy flooring and repair systems', 'العزل المائي وأرضيات الإيبوكسي وأنظمة الإصلاح'),
+    issuer: bi('Fosam Company Limited (Saudi Fosroc)', 'شركة فوسام المحدودة (فوسروك السعودية)'),
+    issued: '2025-06-24',
+    thumb: `${BASE}/fosroc-applicator-thumb.jpg`,
+    pages: [`${BASE}/fosroc-applicator.jpg`],
+    file: `${BASE}/fosroc-applicator.pdf`,
+    facts: [
+      { label: bi('Reference', 'المرجع'), value: bi('AW-CR-GEN-LE-2202025', 'AW-CR-GEN-LE-2202025') },
+      { label: bi('Systems', 'الأنظمة'), value: bi('Waterproofing, epoxy flooring, repair and protection', 'العزل المائي وأرضيات الإيبوكسي والإصلاح والحماية') },
+      { label: bi('Trained technicians', 'الفنيون المدرّبون'), value: bi('Six technicians named in the letter', 'ستة فنيين مذكورين في الخطاب') },
+    ],
+  },
+  {
+    id: 'kingspan-applicator',
+    group: 'manufacturers',
+    title: bi('Kingspan authorised applicator', 'مطبّق معتمد من كينغسباين'),
+    kind: bi('Kingspan Therma TR27', 'Kingspan Therma TR27'),
+    issuer: bi('Kingspan Insulation LLC', 'كينغسباين للعزل ذ.م.م'),
+    issued: '2024-05-02',
+    thumb: `${BASE}/kingspan-applicator-thumb.jpg`,
+    pages: [`${BASE}/kingspan-applicator.jpg`],
+    file: `${BASE}/kingspan-applicator.pdf`,
+    facts: [
+      { label: bi('Reference', 'المرجع'), value: bi('DdP/2024051', 'DdP/2024051') },
+      { label: bi('Product', 'المنتج'), value: bi('Kingspan Therma TR27', 'Kingspan Therma TR27') },
+      { label: bi('Support', 'الدعم'), value: bi('Periodic site visits and observations during projects', 'زيارات ومعاينات دورية للموقع خلال المشاريع') },
+    ],
+  },
+  {
+    id: 'henkel-applicator',
+    group: 'manufacturers',
+    title: bi('Henkel Polybit approved applicator', 'مطبّق معتمد من هنكل بوليبت'),
+    kind: bi('Bitumen, cementitious and polyurethane waterproofing', 'العزل المائي بالبيتومين والمواد الإسمنتية والبولي يوريثان'),
+    issuer: bi('Henkel Polybit Industries Ltd.', 'هنكل بوليبت للصناعات المحدودة'),
+    issued: '2026-04-04',
+    expires: '2027-04-04',
+    thumb: `${BASE}/henkel-applicator-thumb.jpg`,
+    pages: [`${BASE}/henkel-applicator.jpg`],
+    file: `${BASE}/henkel-applicator.pdf`,
+    facts: [
+      { label: bi('Reference', 'المرجع'), value: bi('HPIL/KRCC/1782/2354/13', 'HPIL/KRCC/1782/2354/13') },
+      { label: bi('Validity', 'مدة الصلاحية'), value: bi('One year from the date of issue', 'سنة من تاريخ الإصدار') },
+    ],
+  },
+  {
+    id: 'spfa-membership',
+    group: 'manufacturers',
+    title: bi('SPFA membership', 'عضوية SPFA'),
+    kind: bi('Spray Polyurethane Foam Alliance', 'تحالف رغوة البولي يوريثان المرشوشة'),
+    issuer: bi('Spray Polyurethane Foam Alliance (SPFA)', 'تحالف رغوة البولي يوريثان المرشوشة (SPFA)'),
+    expires: '2027-07-24',
+    thumb: `${BASE}/spfa-membership-thumb.jpg`,
+    pages: [`${BASE}/spfa-membership.jpg`],
+    file: `${BASE}/spfa-membership.pdf`,
+    wide: true,
+    ratio: 1.25,
+    facts: [
+      { label: bi('Member no.', 'رقم العضوية'), value: bi('52104592', '52104592') },
+    ],
+  },
+  {
+    id: 'techno-rubber',
+    group: 'manufacturers',
+    title: bi('Techno Rubber confirmation letter', 'خطاب تأكيد من تكنو رابر'),
+    kind: bi('EPDM application, Jafurah Aramco', 'تركيب EPDM، الجافورة أرامكو'),
+    issuer: bi('Techno Rubber Company Ltd.', 'شركة المطاط الفني المحدودة'),
+    issued: '2024-05-26',
+    thumb: `${BASE}/techno-rubber-thumb.jpg`,
+    pages: [`${BASE}/techno-rubber.jpg`],
+    file: `${BASE}/techno-rubber.pdf`,
+    facts: [
+      { label: bi('Project', 'المشروع'), value: bi('Jafurah, Aramco', 'الجافورة، أرامكو') },
+      { label: bi('Confirmation', 'التأكيد'), value: bi('Air bubbles in the EPDM installation do not affect membrane performance or cause leakage', 'فقاعات الهواء في تركيب EPDM لا تؤثر على أداء الغشاء ولا تسبب أي تسرب') },
+    ],
+  },
+  {
+    id: 'sumou-approval',
+    group: 'letters',
+    title: bi('Dar Sumou waterproofing approval', 'اعتماد العزل المائي، دار سمو'),
+    kind: bi('Pre-qualification submittal, Jeddah', 'طلب تأهيل مسبق، جدة'),
+    issuer: bi('Project consultant, Dar Sumou', 'استشاري مشروع دار سمو'),
+    issued: '2023-02-25',
+    thumb: `${BASE}/sumou-approval-thumb.jpg`,
+    pages: [`${BASE}/sumou-approval.jpg`],
+    file: `${BASE}/sumou-approval.pdf`,
+    facts: [
+      { label: bi('Submittal no.', 'رقم الطلب'), value: bi('MTC_SUB_PQ_ARCH_049_R1', 'MTC_SUB_PQ_ARCH_049_R1') },
+      { label: bi('Project', 'المشروع'), value: bi('Dar Sumou, 206 villas, Jeddah', 'مشروع دار سمو، 206 فلل، جدة') },
+      { label: bi('Scope', 'نطاق العمل'), value: bi('Wet areas: acrylic modified cementitious coating. Roofs: polyurethane foam spray', 'المناطق الرطبة: طلاء إسمنتي معدّل بالأكريليك. الأسطح: رغوة البولي يوريثان المرشوشة') },
+      { label: bi('Result', 'النتيجة'), value: bi('Approved as noted, 25 Feb 2023', 'معتمد مع الملاحظات، 25 فبراير 2023') },
+    ],
+  },
+  {
+    id: 'sinohydro-hse',
+    group: 'letters',
+    title: bi('Sinohydro HSE performance certificate', 'شهادة أداء الصحة والسلامة، سينوهيدرو'),
+    kind: bi('Development Housing Project, Jazan', 'مشروع الإسكان التنموي، جازان'),
+    issuer: bi('Sinohydro Corporation, HSE department', 'سينوهيدرو، قسم الصحة والسلامة والبيئة'),
+    issued: '2022-08-24',
+    thumb: `${BASE}/sinohydro-hse-thumb.jpg`,
+    pages: [`${BASE}/sinohydro-hse.jpg`],
+    file: `${BASE}/sinohydro-hse.pdf`,
+    wide: true,
+    ratio: 1.169,
+    facts: [
+      { label: bi('Project', 'المشروع'), value: bi('Development Housing Project for Jazan, KSA', 'مشروع الإسكان التنموي بجازان') },
+      { label: bi('Recognition', 'سبب التقدير'), value: bi('Outstanding performance in health, safety and environment', 'أداء متميز في الصحة والسلامة والبيئة') },
+    ],
+  },
+  {
+    id: 'projects-completed',
+    group: 'profile',
+    title: bi('Projects completed', 'المشاريع المنجزة'),
+    kind: bi('Register of 72 completed projects', 'سجل 72 مشروعا منجزا'),
+    issuer: bi('Khabeer Al Raida Contracting Co.', 'شركة خبير الرائدة للمقاولات'),
+    thumb: `${BASE}/projects-completed-thumb.jpg`,
+    pages: [1, 2].map((n) => `${BASE}/projects-completed-${n}.jpg`),
+    file: `${BASE}/projects-completed.pdf`,
+    facts: [
+      { label: bi('Projects listed', 'عدد المشاريع'), value: bi('72', '72') },
+      { label: bi('Work covered', 'الأعمال'), value: bi('Waterproofing, lining, flooring, asphalt, finishing and electrical works', 'العزل المائي والتبطين والأرضيات والأسفلت والتشطيبات والأعمال الكهربائية') },
+    ],
+  },
+  {
+    id: 'org-equipment',
+    group: 'profile',
+    title: bi('Organization and equipment', 'الهيكل التنظيمي والمعدات'),
+    kind: bi('Organizational chart and equipment list', 'الهيكل التنظيمي وقائمة المعدات'),
+    issuer: bi('Khabeer Al Raida Contracting Co.', 'شركة خبير الرائدة للمقاولات'),
+    thumb: `${BASE}/org-equipment-thumb.jpg`,
+    pages: [1, 2].map((n) => `${BASE}/org-equipment-${n}.jpg`),
+    file: `${BASE}/org-equipment.pdf`,
+    facts: [
+      { label: bi('Pages', 'الصفحات'), value: bi('Organizational chart, equipment list', 'الهيكل التنظيمي، قائمة المعدات') },
+    ],
+  },
 ];
 
 const PAPER_ORDER = [
   'iso-9001', 'iso-14001', 'iso-45001',
-  'classification', 'aramco-approval', 'monshaat', 'sca-membership',
-  'khyber', 'kaab', 'bedaa', 'fbc', 'ejad', 'jeddah-first',
+  'classification', 'local-content', 'monshaat', 'sca-membership',
+  'aramco-approval', 'aramco-fmar',
+  'mapei-applicator', 'fosroc-applicator', 'kingspan-applicator', 'henkel-applicator', 'spfa-membership', 'techno-rubber',
+  'khyber', 'kaab', 'bedaa', 'fbc', 'ejad', 'jeddah-first', 'sumou-approval', 'sinohydro-hse',
+  'projects-completed', 'org-equipment',
 ];
 ITEMS.sort((a, b) => PAPER_ORDER.indexOf(a.id) - PAPER_ORDER.indexOf(b.id));
 
 const GROUPS: { id: GroupId; title: L10n; tab: L10n }[] = [
-  { id: 'standards', title: bi('Management system standards', 'معايير نظم الإدارة'), tab: bi('ISO standards', 'معايير الآيزو') },
-  { id: 'approvals', title: bi('Approvals and registrations', 'الاعتمادات والتسجيلات'), tab: bi('Approvals', 'الاعتمادات') },
-  { id: 'letters', title: bi('Completion and reference letters', 'شهادات الإنجاز وخطابات العملاء'), tab: bi('Client letters', 'خطابات العملاء') },
+  { id: 'standards', title: bi('ISO certifications', 'شهادات الآيزو'), tab: bi('ISO', 'الآيزو') },
+  { id: 'government', title: bi('Government and authority registrations', 'التسجيلات والاعتمادات الحكومية'), tab: bi('Government', 'الجهات الحكومية') },
+  { id: 'aramco', title: bi('Saudi Aramco', 'أرامكو السعودية'), tab: bi('Saudi Aramco', 'أرامكو') },
+  { id: 'manufacturers', title: bi('Manufacturer approvals and memberships', 'اعتمادات المصنّعين والعضويات'), tab: bi('Manufacturers', 'المصنّعون') },
+  { id: 'letters', title: bi('Client completion, approval and performance letters', 'شهادات الإنجاز والاعتماد والأداء من العملاء'), tab: bi('Client letters', 'خطابات العملاء') },
+  { id: 'profile', title: bi('Company profile', 'ملف الشركة'), tab: bi('Company profile', 'ملف الشركة') },
 ];
 
 const REGISTRATIONS = [
@@ -337,8 +536,11 @@ function validity(item: CertItem, lang: Lang): { text: string; state: 'valid' | 
       ? { text: lang === 'ar' ? `انتهت في ${date}` : `Expired ${date}`, state: 'ended' }
       : { text: lang === 'ar' ? `سارية حتى ${date}` : `Valid until ${date}`, state: 'valid' };
   }
-  const date = fmtDate(item.issued, lang);
-  return { text: lang === 'ar' ? `صدرت في ${date}` : `Issued ${date}`, state: 'issued' };
+  if (item.issued) {
+    const date = fmtDate(item.issued, lang);
+    return { text: lang === 'ar' ? `صدرت في ${date}` : `Issued ${date}`, state: 'issued' };
+  }
+  return { text: lang === 'ar' ? 'مستند الشركة' : 'Company document', state: 'issued' };
 }
 
 function useInView<T extends HTMLElement>(threshold = 0.12) {
@@ -569,10 +771,12 @@ const Viewer: React.FC<{
                 <dt>{isAr ? 'الجهة المصدرة' : 'Issued by'}</dt>
                 <dd>{item.issuer[lang]}</dd>
               </div>
-              <div>
-                <dt>{isAr ? 'تاريخ الإصدار' : 'Issue date'}</dt>
-                <dd>{fmtDate(item.issued, lang)}</dd>
-              </div>
+              {item.issued && (
+                <div>
+                  <dt>{isAr ? 'تاريخ الإصدار' : 'Issue date'}</dt>
+                  <dd>{fmtDate(item.issued, lang)}</dd>
+                </div>
+              )}
               {item.expires && (
                 <div>
                   <dt>{isAr ? 'تاريخ الانتهاء' : 'Expiry date'}</dt>
@@ -591,6 +795,9 @@ const Viewer: React.FC<{
                 </div>
               ))}
             </dl>
+            <p className="cv-wm-note">
+              {isAr ? 'جميع النسخ المعروضة تحمل علامة KRCC المائية.' : 'Every copy shown here carries the KRCC watermark.'}
+            </p>
           </aside>
         </div>
       </div>
@@ -658,7 +865,7 @@ export const CertificationsSection: React.FC = () => {
             <div className="cv-block-title">{lang === 'ar' ? 'ملف الاعتمادات' : 'Credentials on file'}</div>
             <Stat target={ITEMS.length} active={statsSeen} label={lang === 'ar' ? 'مستند' : 'Documents'} />
             <Stat target={ITEMS.filter((i) => i.group === 'standards').length} active={statsSeen} label={lang === 'ar' ? 'معايير آيزو' : 'ISO standards'} />
-            <Stat target={ITEMS.filter((i) => i.group === 'letters').length} active={statsSeen} label={lang === 'ar' ? 'خطابات عملاء' : 'Client letters'} />
+            <Stat target={GROUPS.length} active={statsSeen} label={lang === 'ar' ? 'تصنيفات' : 'Categories'} />
           </div>
         </header>
 

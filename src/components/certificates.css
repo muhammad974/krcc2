@@ -694,3 +694,6 @@ html[dir='rtl'] .cv-rule { transform-origin: right center; }
   -webkit-touch-callout: none;
   user-select: none;
 }
+
+/* small line under the facts in the viewer */
+.cv-wm-note { margin: 1.2rem 0 0; padding-top: 0.9rem; border-top: 1px dashed #cbd5e1; font-size: 0.75rem; line-height: 1.5; color: #64748b; }
