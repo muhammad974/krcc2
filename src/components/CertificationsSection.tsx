@@ -460,10 +460,10 @@ const ITEMS: CertItem[] = [
 ];
 
 const PAPER_ORDER = [
-  /* 1. ISO certificates */
-  'iso-14001', 'iso-9001', 'iso-45001',
-  /* 2. government approval certificates */
+  /* 1. government approval certificates */
   'classification', 'monshaat', 'local-content', 'sca-membership',
+  /* 2. ISO certificates */
+  'iso-14001', 'iso-9001', 'iso-45001',
   /* 3. completion certificates */
   'bedaa', 'ejad', 'fbc', 'kaab', 'khyber', 'jeddah-first', 'sinohydro-hse',
   /* 4. material approval certificates */
@@ -475,8 +475,8 @@ const PAPER_ORDER = [
 ITEMS.sort((a, b) => PAPER_ORDER.indexOf(a.id) - PAPER_ORDER.indexOf(b.id));
 
 const GROUPS: { id: GroupId; title: L10n; tab: L10n }[] = [
-  { id: 'standards', title: bi('ISO certificates', 'شهادات الآيزو'), tab: bi('ISO certificates', 'شهادات الآيزو') },
   { id: 'government', title: bi('Government approval certificates', 'شهادات الاعتماد الحكومية'), tab: bi('Government approval certificates', 'شهادات الاعتماد الحكومية') },
+  { id: 'standards', title: bi('ISO certificates', 'شهادات الآيزو'), tab: bi('ISO certificates', 'شهادات الآيزو') },
   { id: 'completion', title: bi('Completion certificates', 'شهادات الإنجاز'), tab: bi('Completion certificates', 'شهادات الإنجاز') },
   { id: 'material', title: bi('Material approval certificates', 'شهادات اعتماد المواد'), tab: bi('Material approval certificates', 'شهادات اعتماد المواد') },
   { id: 'project', title: bi('Project approval pre-qualification', 'اعتماد المشاريع والتأهيل المسبق'), tab: bi('Project approval pre-qualification', 'اعتماد المشاريع والتأهيل المسبق') },
@@ -786,7 +786,7 @@ const Viewer: React.FC<{
 export const CertificationsSection: React.FC = () => {
   const { t, language } = useLanguage();
   const lang: Lang = language === 'ar' ? 'ar' : 'en';
-  const [filter, setFilter] = useState<FilterId>('standards');
+  const [filter, setFilter] = useState<FilterId>('government');
   const [openId, setOpenId] = useState<string | null>(null);
   const openerRef = useRef<HTMLElement | null>(null);
   const spotRef = useRef<HTMLDivElement>(null);
