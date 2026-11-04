@@ -475,11 +475,11 @@ const PAPER_ORDER = [
 ITEMS.sort((a, b) => PAPER_ORDER.indexOf(a.id) - PAPER_ORDER.indexOf(b.id));
 
 const GROUPS: { id: GroupId; title: L10n; tab: L10n }[] = [
-  { id: 'standards', title: bi('ISO certifications', 'شهادات الآيزو'), tab: bi('ISO', 'الآيزو') },
-  { id: 'government', title: bi('Government approval certificates', 'شهادات الاعتماد الحكومية'), tab: bi('Government approvals', 'الاعتمادات الحكومية') },
-  { id: 'completion', title: bi('Completion certificates', 'شهادات الإنجاز'), tab: bi('Completion', 'شهادات الإنجاز') },
-  { id: 'material', title: bi('Material approval certificates', 'شهادات اعتماد المواد'), tab: bi('Material approvals', 'اعتماد المواد') },
-  { id: 'project', title: bi('Project approval and pre-qualification', 'اعتماد المشاريع والتأهيل المسبق'), tab: bi('Project approval', 'اعتماد المشاريع') },
+  { id: 'standards', title: bi('ISO certificates', 'شهادات الآيزو'), tab: bi('ISO certificates', 'شهادات الآيزو') },
+  { id: 'government', title: bi('Government approval certificates', 'شهادات الاعتماد الحكومية'), tab: bi('Government approval certificates', 'شهادات الاعتماد الحكومية') },
+  { id: 'completion', title: bi('Completion certificates', 'شهادات الإنجاز'), tab: bi('Completion certificates', 'شهادات الإنجاز') },
+  { id: 'material', title: bi('Material approval certificates', 'شهادات اعتماد المواد'), tab: bi('Material approval certificates', 'شهادات اعتماد المواد') },
+  { id: 'project', title: bi('Project approval pre-qualification', 'اعتماد المشاريع والتأهيل المسبق'), tab: bi('Project approval pre-qualification', 'اعتماد المشاريع والتأهيل المسبق') },
 ];
 
 const REGISTRATIONS = [
