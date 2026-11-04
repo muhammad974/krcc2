@@ -457,6 +457,76 @@ const ITEMS: CertItem[] = [
       { label: bi('Recognition', 'سبب التقدير'), value: bi('Outstanding performance in health, safety and environment', 'أداء متميز في الصحة والسلامة والبيئة') },
     ],
   },
+
+  {
+    id: 'insuwrap-applicator',
+    group: 'material',
+    title: bi('Insuwrap approved applicator', 'مطبّق معتمد من إنسيوراب'),
+    kind: bi('PVC waterproofing membranes for roofing', 'أغشية PVC للعزل المائي للأسطح'),
+    issuer: bi('Waterproofing & Wrapping Products Co., Ltd. (Insuwrap)', 'شركة منتجات العزل المائي والتغليف المحدودة (إنسيوراب)'),
+    issued: '2024-08-26',
+    thumb: `${BASE}/insuwrap-thumb.jpg`,
+    pages: [`${BASE}/insuwrap.jpg`],
+    file: `${BASE}/insuwrap.pdf`,
+    facts: [
+      { label: bi('Reference', 'المرجع'), value: bi('260824/08/24 LE', '260824/08/24 LE') },
+      { label: bi('Product', 'المنتج'), value: bi('Insuwrap PVC waterproofing membranes, roofing system', 'أغشية Insuwrap PVC للعزل المائي، نظام الأسطح') },
+      { label: bi('Validity', 'مدة الصلاحية'), value: bi('Six months from the date of the letter', 'ستة أشهر من تاريخ الخطاب') },
+    ],
+  },
+  {
+    id: 'nbtc-krcc',
+    group: 'completion',
+    title: bi('NBTC completion certificate', 'شهادة إنجاز NBTC'),
+    kind: bi('Roof waterproofing, Jafurah Gas Plant', 'عزل الأسطح، مصنع غاز الجافورة'),
+    issuer: bi('Branch of Naser Mohammed Al-Baddah & Partner for Contracting (NBTC)', 'فرع شركة ناصر محمد البداح وشريكه للمقاولات (NBTC)'),
+    issued: '2026-09-26',
+    thumb: `${BASE}/nbtc-krcc-thumb.jpg`,
+    pages: [`${BASE}/nbtc-krcc.jpg`],
+    file: `${BASE}/nbtc-krcc.pdf`,
+    facts: [
+      { label: bi('Reference', 'المرجع'), value: bi('NBTC-KSA/KRCC/WCC/2026/001', 'NBTC-KSA/KRCC/WCC/2026/001') },
+      { label: bi('Project', 'المشروع'), value: bi('Jafurah Gas Plant Expansion Project Phase-II, U&O pkg II (Saudi Aramco)', 'مشروع توسعة مصنع غاز الجافورة المرحلة الثانية، حزمة U&O رقم 2 (أرامكو السعودية)') },
+      { label: bi('Scope', 'نطاق العمل'), value: bi('Supply and installation of roof waterproofing and metal coping works', 'توريد وتركيب أعمال عزل الأسطح وكسوة الحواف المعدنية') },
+      { label: bi('Location', 'الموقع'), value: bi('GIS-02 230 KV Main Substation', 'محطة GIS-02 الرئيسية 230 ك.ف') },
+      { label: bi('Completed', 'تاريخ الإنجاز'), value: bi('2 Sep 2026', '2 سبتمبر 2026') },
+    ],
+  },
+  {
+    id: 'aramco-fmar-0045',
+    group: 'material',
+    title: bi('Aramco material approval (FMAR-0045)', 'اعتماد مواد أرامكو (FMAR-0045)'),
+    kind: bi('Roof waterproofing materials, Jafurah', 'مواد عزل الأسطح، الجافورة'),
+    issuer: bi('Saudi Aramco, document transmittal and field material approval requests', 'أرامكو السعودية، مراسلة المستندات وطلبات اعتماد المواد'),
+    issued: '2023-12-27',
+    thumb: `${BASE}/aramco-fmar-0045-thumb.jpg`,
+    pages: [1, 2, 3].map((n) => `${BASE}/aramco-fmar-0045-${n}.jpg`),
+    file: `${BASE}/aramco-fmar-0045.pdf`,
+    facts: [
+      { label: bi('Document no.', 'رقم المستند'), value: bi('JUS&ICS-AR-FMAR-0045 (Rev. A1)', 'JUS&ICS-AR-FMAR-0045 (Rev. A1)') },
+      { label: bi('Project', 'المشروع'), value: bi('Jafurah Utilities, Sulfur and Interconnecting Systems, Package 3', 'مشروع الجافورة للمرافق والكبريت والأنظمة المترابطة، الحزمة 3') },
+      { label: bi('Material', 'المادة'), value: bi('Roof waterproofing materials: insulation, adhesives, screed admixture, flashing', 'مواد عزل الأسطح: العزل الحراري واللواصق وإضافات المونة والفلاشينج') },
+      { label: bi('Review result', 'نتيجة المراجعة'), value: bi('Reviewed, 25 Jan 2024', 'تمت المراجعة، 25 يناير 2024') },
+      { label: bi('Vendor code', 'رمز المورد'), value: bi('10110264', '10110264') },
+    ],
+  },
+  {
+    id: 'sedra-prequal',
+    group: 'project',
+    title: bi('SEDRA waterproofing pre-qualification', 'التأهيل المسبق للعزل المائي، سدرة'),
+    kind: bi('CNT prequalification, SEDRA Phase 4', 'تأهيل CNT، سدرة المرحلة 4'),
+    issuer: bi('Roshn Group, SEDRA (East Consulting Engineering Center)', 'مجموعة روشن، سدرة (مركز الشرق للاستشارات الهندسية)'),
+    issued: '2025-09-06',
+    thumb: `${BASE}/cnt-prequal-sedra-thumb.jpg`,
+    pages: [`${BASE}/cnt-prequal-sedra.jpg`],
+    file: `${BASE}/cnt-prequal-sedra.pdf`,
+    facts: [
+      { label: bi('Reference', 'المرجع'), value: bi('00104-CU-0015S-POL-ARC-00002', '00104-CU-0015S-POL-ARC-00002') },
+      { label: bi('Project phase', 'مرحلة المشروع'), value: bi('00104-SEDRA-4', '00104-SEDRA-4') },
+      { label: bi('Submitted by', 'مقدم من'), value: bi('Branch of China Harbour Engineering Company Ltd', 'فرع شركة الصين هاربر للهندسة المحدودة') },
+      { label: bi('Status', 'الحالة'), value: bi('Submitted, 6 Sep 2025', 'مقدّم، 6 سبتمبر 2025') },
+    ],
+  },
 ];
 
 const PAPER_ORDER = [
@@ -465,12 +535,12 @@ const PAPER_ORDER = [
   /* 2. ISO certificates */
   'iso-14001', 'iso-9001', 'iso-45001',
   /* 3. completion certificates */
-  'bedaa', 'ejad', 'fbc', 'kaab', 'khyber', 'jeddah-first', 'sinohydro-hse',
+  'bedaa', 'ejad', 'fbc', 'nbtc-krcc', 'kaab', 'khyber', 'jeddah-first', 'sinohydro-hse',
   /* 4. material approval certificates */
-  'kingspan-applicator', 'fosroc-applicator', 'techno-rubber', 'mapei-applicator', 'henkel-applicator', 'spfa-membership',
-  'aramco-approval', 'aramco-fmar',
+  'insuwrap-applicator', 'kingspan-applicator', 'fosroc-applicator', 'techno-rubber', 'mapei-applicator', 'henkel-applicator', 'spfa-membership',
+  'aramco-approval', 'aramco-fmar-0045', 'aramco-fmar',
   /* 5. project approval / pre-qualification */
-  'sumou-approval',
+  'sumou-approval', 'sedra-prequal',
 ];
 ITEMS.sort((a, b) => PAPER_ORDER.indexOf(a.id) - PAPER_ORDER.indexOf(b.id));
 
